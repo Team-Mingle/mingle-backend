@@ -1,0 +1,1304 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1691839707105-1
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: board
+                  type: VARCHAR(45)
+            tableName: board_type
+  - changeSet:
+      id: 1691839707105-2
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: category
+                  type: VARCHAR(45)
+            tableName: category_type
+  - changeSet:
+      id: 1691839707105-3
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: post_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  name: parent_comment_id
+                  type: BIGINT
+              - column:
+                  name: mention_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: content
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: anonymous
+                  type: BIT(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+            tableName: comment
+  - changeSet:
+      id: 1691839707105-4
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: comment_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+            tableName: comment_like
+  - changeSet:
+      id: 1691839707105-5
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: comment_id
+                  type: BIGINT
+            tableName: commnet_notification
+  - changeSet:
+      id: 1691839707105-6
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+            tableName: content_like
+  - changeSet:
+      id: 1691839707105-7
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: status
+                  type: VARCHAR(45)
+            tableName: content_status_type
+  - changeSet:
+      id: 1691839707105-8
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: content
+                  type: VARCHAR(20)
+            tableName: content_type
+  - changeSet:
+      id: 1691839707105-9
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: country
+                  type: VARCHAR(45)
+            tableName: country
+  - changeSet:
+      id: 1691839707105-10
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: university_id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: nickname
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: password
+                  type: VARCHAR(100)
+              - column:
+                  name: agreed_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: role
+                  type: VARCHAR(45)
+              - column:
+                  name: fcm_token
+                  type: TEXT
+            tableName: member
+  - changeSet:
+      id: 1691839707105-11
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: role
+                  type: VARCHAR(45)
+            tableName: member_role_type
+  - changeSet:
+      id: 1691839707105-12
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: status
+                  type: VARCHAR(45)
+            tableName: member_status_type
+  - changeSet:
+      id: 1691839707105-13
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: board
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: category
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: notification_type
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: read
+                  type: BIT(1)
+            tableName: notification
+  - changeSet:
+      id: 1691839707105-14
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: notification
+                  type: VARCHAR(45)
+            tableName: notification_type
+  - changeSet:
+      id: 1691839707105-15
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: board
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: category
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: title
+                  type: VARCHAR(45)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: content
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: anonymous
+                  type: BIT(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: file_attached
+                  type: BIT(1)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: status
+                  type: VARCHAR(45)
+              - column:
+                  name: view_count
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: deleted_at
+                  type: timestamp
+            tableName: post
+  - changeSet:
+      id: 1691839707105-16
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: post_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: url
+                  type: TEXT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+              - column:
+                  constraints:
+                    nullable: false
+                  name: deleted_at
+                  type: timestamp
+            tableName: post_image
+  - changeSet:
+      id: 1691839707105-17
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: post_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+            tableName: post_like
+  - changeSet:
+      id: 1691839707105-18
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: post_id
+                  type: BIGINT
+            tableName: post_notification
+  - changeSet:
+      id: 1691839707105-19
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: post_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+            tableName: post_scrap
+  - changeSet:
+      id: 1691839707105-20
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: post_id
+                  type: BIGINT
+              - column:
+                  name: comment_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: reporter_member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: reported_member_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: content_type
+                  type: VARCHAR(20)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: report_type
+                  type: VARCHAR(20)
+              - column:
+                  name: reason
+                  type: VARCHAR(200)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: created_at
+                  type: timestamp
+            tableName: report
+  - changeSet:
+      id: 1691839707105-21
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: report
+                  type: VARCHAR(20)
+            tableName: report_type
+  - changeSet:
+      id: 1691839707105-22
+      author: leojung (generated)
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                  name: id
+                  type: INT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: email_domain
+                  type: VARCHAR(100)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: country
+                  type: VARCHAR(45)
+            tableName: university
+  - changeSet:
+      id: 1691839707105-23
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: board
+            indexName: board
+            tableName: notification
+  - changeSet:
+      id: 1691839707105-24
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: board
+            indexName: board
+            tableName: post
+  - changeSet:
+      id: 1691839707105-25
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: category
+            indexName: category
+            tableName: notification
+  - changeSet:
+      id: 1691839707105-26
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: category
+            indexName: category
+            tableName: post
+  - changeSet:
+      id: 1691839707105-27
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: comment_id
+            indexName: comment_id
+            tableName: comment_like
+  - changeSet:
+      id: 1691839707105-28
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: comment_id
+            indexName: comment_id
+            tableName: commnet_notification
+  - changeSet:
+      id: 1691839707105-29
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: content_type
+            indexName: content_type
+            tableName: report
+  - changeSet:
+      id: 1691839707105-30
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: country
+            indexName: country
+            tableName: university
+  - changeSet:
+      id: 1691839707105-31
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: member_id
+            indexName: member_id
+            tableName: comment
+  - changeSet:
+      id: 1691839707105-32
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: member_id
+            indexName: member_id
+            tableName: content_like
+  - changeSet:
+      id: 1691839707105-33
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: member_id
+            indexName: member_id
+            tableName: notification
+  - changeSet:
+      id: 1691839707105-34
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: member_id
+            indexName: member_id
+            tableName: post
+  - changeSet:
+      id: 1691839707105-35
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: member_id
+            indexName: member_id
+            tableName: post_scrap
+  - changeSet:
+      id: 1691839707105-36
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: notification_type
+            indexName: notification_type
+            tableName: notification
+  - changeSet:
+      id: 1691839707105-37
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: post_id
+            indexName: post_id
+            tableName: post_image
+  - changeSet:
+      id: 1691839707105-38
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: post_id
+            indexName: post_id
+            tableName: post_like
+  - changeSet:
+      id: 1691839707105-39
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: post_id
+            indexName: post_id
+            tableName: post_notification
+  - changeSet:
+      id: 1691839707105-40
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: post_id
+            indexName: post_id
+            tableName: post_scrap
+  - changeSet:
+      id: 1691839707105-41
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: report_type
+            indexName: report_type
+            tableName: report
+  - changeSet:
+      id: 1691839707105-42
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: reported_member_id
+            indexName: reported_member_id
+            tableName: report
+  - changeSet:
+      id: 1691839707105-43
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: reporter_member_id
+            indexName: reporter_member_id
+            tableName: report
+  - changeSet:
+      id: 1691839707105-44
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: role
+            indexName: role
+            tableName: member
+  - changeSet:
+      id: 1691839707105-45
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: status
+            indexName: status
+            tableName: comment
+  - changeSet:
+      id: 1691839707105-46
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: status
+            indexName: status
+            tableName: member
+  - changeSet:
+      id: 1691839707105-47
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: status
+            indexName: status
+            tableName: post
+  - changeSet:
+      id: 1691839707105-48
+      author: leojung (generated)
+      changes:
+        - createIndex:
+            columns:
+              - column:
+                  name: university_id
+            indexName: university_id
+            tableName: member
+  - changeSet:
+      id: 1691839707105-49
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: comment
+            constraintName: comment_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-50
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: status
+            baseTableName: comment
+            constraintName: comment_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: status
+            referencedTableName: content_status_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-51
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: comment_like
+            constraintName: comment_like_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: content_like
+            validate: true
+  - changeSet:
+      id: 1691839707105-52
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: comment_id
+            baseTableName: comment_like
+            constraintName: comment_like_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: comment
+            validate: true
+  - changeSet:
+      id: 1691839707105-53
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: commnet_notification
+            constraintName: commnet_notification_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: notification
+            validate: true
+  - changeSet:
+      id: 1691839707105-54
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: comment_id
+            baseTableName: commnet_notification
+            constraintName: commnet_notification_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: comment
+            validate: true
+  - changeSet:
+      id: 1691839707105-55
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: content_like
+            constraintName: content_like_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-56
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: university_id
+            baseTableName: member
+            constraintName: member_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: university
+            validate: true
+  - changeSet:
+      id: 1691839707105-57
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: status
+            baseTableName: member
+            constraintName: member_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: status
+            referencedTableName: member_status_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-58
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role
+            baseTableName: member
+            constraintName: member_ibfk_3
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: role
+            referencedTableName: member_role_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-59
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: notification
+            constraintName: notification_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-60
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: board
+            baseTableName: notification
+            constraintName: notification_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: board
+            referencedTableName: board_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-61
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category
+            baseTableName: notification
+            constraintName: notification_ibfk_3
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: category
+            referencedTableName: category_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-62
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: notification_type
+            baseTableName: notification
+            constraintName: notification_ibfk_4
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: notification
+            referencedTableName: notification_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-63
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: post
+            constraintName: post_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-64
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: board
+            baseTableName: post
+            constraintName: post_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: board
+            referencedTableName: board_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-65
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: category
+            baseTableName: post
+            constraintName: post_ibfk_3
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: category
+            referencedTableName: category_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-66
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: status
+            baseTableName: post
+            constraintName: post_ibfk_4
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: status
+            referencedTableName: content_status_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-67
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: post_image
+            constraintName: post_image_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: post
+            validate: true
+  - changeSet:
+      id: 1691839707105-68
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: post_like
+            constraintName: post_like_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: content_like
+            validate: true
+  - changeSet:
+      id: 1691839707105-69
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: post_like
+            constraintName: post_like_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: post
+            validate: true
+  - changeSet:
+      id: 1691839707105-70
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: id
+            baseTableName: post_notification
+            constraintName: post_notification_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: notification
+            validate: true
+  - changeSet:
+      id: 1691839707105-71
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: post_notification
+            constraintName: post_notification_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: post
+            validate: true
+  - changeSet:
+      id: 1691839707105-72
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: post_id
+            baseTableName: post_scrap
+            constraintName: post_scrap_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: post
+            validate: true
+  - changeSet:
+      id: 1691839707105-73
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: member_id
+            baseTableName: post_scrap
+            constraintName: post_scrap_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-74
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: reporter_member_id
+            baseTableName: report
+            constraintName: report_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-75
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: reported_member_id
+            baseTableName: report
+            constraintName: report_ibfk_2
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableName: member
+            validate: true
+  - changeSet:
+      id: 1691839707105-76
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: content_type
+            baseTableName: report
+            constraintName: report_ibfk_3
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: content
+            referencedTableName: content_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-77
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: report_type
+            baseTableName: report
+            constraintName: report_ibfk_4
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: report
+            referencedTableName: report_type
+            validate: true
+  - changeSet:
+      id: 1691839707105-78
+      author: leojung (generated)
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: country
+            baseTableName: university
+            constraintName: university_ibfk_1
+            deferrable: false
+            initiallyDeferred: false
+            onDelete: RESTRICT
+            onUpdate: RESTRICT
+            referencedColumnNames: country
+            referencedTableName: country
+            validate: true
