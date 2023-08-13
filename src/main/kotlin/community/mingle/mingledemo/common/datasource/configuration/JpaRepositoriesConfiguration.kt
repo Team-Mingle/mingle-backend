@@ -39,6 +39,7 @@ class JpaRepositoriesConfiguration(
     @Bean
     @ConfigurationProperties("spring.datasource.hikari")
     fun dataSource(): DataSource {
+        //TODO AWS security config 설정하기
 //        val dataSourceConfig =
 //            secretsManagerService.getDataSourceConfig(profile)
         val dataSource = HikariDataSourceUtil.createHikariDataSource(
