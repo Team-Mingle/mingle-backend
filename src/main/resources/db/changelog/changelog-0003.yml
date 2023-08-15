@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: add name column to university table
+      author: Hyeonwoo Jung
+      changes:
+        - addColumn:
+            tableName: university
+            columns:
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
