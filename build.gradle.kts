@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
 
+    val springDocVersion = "2.0.4"
     fun amazon(module: String, version: String? = null) =
         "software.amazon.awssdk:${module}${version?.let { ":$it" } ?: ""}"
 
@@ -36,6 +37,10 @@ dependencies {
     implementation("org.liquibase:liquibase-core")
     implementation("org.reflections", "reflections", "0.10.2")
     implementation("com.auth0", "java-jwt", "4.3.0")
+
+    implementation("org.springdoc", "springdoc-openapi-starter-common", springDocVersion)
+    implementation("org.springdoc", "springdoc-openapi-starter-webmvc-ui", springDocVersion)
+
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
