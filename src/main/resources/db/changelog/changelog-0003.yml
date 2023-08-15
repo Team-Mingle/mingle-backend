@@ -11,3 +11,27 @@ databaseChangeLog:
                   type: varchar(50)
                   constraints:
                     nullable: false
+
+  - changeSet:
+      id: drop created_at column from content_like table
+      author: Hyeonwoo Jung
+      changes:
+        - dropColumn:
+            tableName: content_like
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamp
+
+  - changeSet:
+      id: add discriminator type column to content_like table
+      author: Hyeonwoo Jung
+      changes:
+        - addColumn:
+            tableName: content_like
+            columns:
+              - column:
+                  name: content_type
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
