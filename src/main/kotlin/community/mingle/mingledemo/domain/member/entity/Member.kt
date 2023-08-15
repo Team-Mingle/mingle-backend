@@ -3,9 +3,13 @@ package community.mingle.mingledemo.domain.member.entity
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
 import jakarta.persistence.*
+import org.hibernate.annotations.SQLDelete
+import org.hibernate.annotations.Where
 import java.time.LocalDateTime
 
 @Entity
+@Where(clause = "deleted_at IS NULL")
+@SQLDelete(sql = "UPDATE department_available_time SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(name = "member")
 class Member(
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
