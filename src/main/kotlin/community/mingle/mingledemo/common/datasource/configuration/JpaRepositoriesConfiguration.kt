@@ -51,7 +51,7 @@ class JpaRepositoriesConfiguration(
                 host = "localhost",
                 port = "9091",
                 dbname = "mingle"
-            ),
+            )
         )
 
         return LazyConnectionDataSourceProxy(dataSource)

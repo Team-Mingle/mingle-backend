@@ -3,6 +3,7 @@ package community.mingle.mingledemo.common.infra.aws.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import community.mingle.mingledemo.common.configuration.ApplicationConfiguration
 import community.mingle.mingledemo.common.dto.DataSourceConfig
+import community.mingle.mingledemo.common.dto.DevToken
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 import org.springframework.stereotype.Service
@@ -26,13 +27,25 @@ class SecretsManagerService(
             .associate { it.name() to it.arn() }
     }
 
-    fun getJwtSecretKey(): String = getSecretValueString(
-        "$projectName/jwt-secret-key",
-    )
+    fun getJwtSecretKey(): String = "jwt-secret-key"
+        //TODO aws secret manager 설정
+//        getSecretValueString(
+//        "$projectName/jwt-secret-key",
+//    )
 
     fun getDataSourceConfig(profile: String): DataSourceConfig = getSecretValue(
         "$projectName/$profile/database/primary",
     )
+
+    fun getJwtDevToken(): DevToken =  DevToken(
+        mingleUser = "mingleUser",
+        mingleAdmin = "mingleAdmin",
+        mingleKsa = "mingleKsa"
+    )
+        //TODO aws secret manager 설정
+//        getSecretValue(
+//        "$projectName/jwt-dev-token",
+//    )
 
     private fun getSecretValueString(name: String): String {
         val arn = arns[name]
