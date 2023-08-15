@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: add foreign key constraint between comment and post_id
+      author: Hyeonwoo Jung
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: comment
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: id
+            constraintName: comment_post_id_fk
