@@ -11,7 +11,7 @@ class AuthorizeRequestsApplierConfiguration {
 
     @Profile(MingleDemo.Profile.LOCAL, MingleDemo.Profile.DEVELOP)
     @Bean(SecurityConfiguration.AUTHORIZE_REQUEST_APPLIER_BEAN_NAME)
-    fun accessibleAuthorizeRequestsApplier() : AuthorizeRequestsApplier = {
+    fun accessibleAuthorizeRequestsApplier(): AuthorizeRequestsApplier = {
         it.authorizeHttpRequests()
             .requestMatchers(
                 *URLS_AUTHENTICATION,
@@ -41,6 +41,7 @@ class AuthorizeRequestsApplierConfiguration {
     companion object {
         private val URLS_AUTHENTICATION = arrayOf(
             "/auth/**",
+            "/country"
         )
         private val URLS_DOCUMENT = arrayOf(
             "/swagger-ui/**",
