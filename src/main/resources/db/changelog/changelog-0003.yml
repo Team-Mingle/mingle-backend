@@ -13,11 +13,17 @@ databaseChangeLog:
                     nullable: false
 
   - changeSet:
-      id: drop created_at column from content_like table
+      id: drop created_at column from comment_like and post_like table
       author: Hyeonwoo Jung
       changes:
         - dropColumn:
-            tableName: content_like
+            tableName: comment_like
+            columns:
+              - column:
+                  name: created_at
+                  type: timestamp
+        - dropColumn:
+            tableName: post_like
             columns:
               - column:
                   name: created_at
