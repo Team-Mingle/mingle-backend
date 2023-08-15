@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "university")
-open class University(
+class University(
     @Column(name = "email_domain", nullable = false, length = 100)
     var emailDomain: String,
 
@@ -19,4 +19,7 @@ open class University(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     val id: Int? = null
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "university")
+    var members = mutableListOf<Member>()
 }
