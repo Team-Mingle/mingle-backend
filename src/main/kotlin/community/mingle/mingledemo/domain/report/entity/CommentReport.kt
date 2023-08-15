@@ -5,7 +5,7 @@ import community.mingle.mingledemo.domain.post.entity.Comment
 import jakarta.persistence.*
 
 @Entity
-@DiscriminatorValue("POST")
+@DiscriminatorValue("COMMENT")
 class CommentReport(
     reporterMember: Member,
     reportedMember: Member,

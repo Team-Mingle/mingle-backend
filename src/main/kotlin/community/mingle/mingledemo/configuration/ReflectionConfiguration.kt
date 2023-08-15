@@ -18,6 +18,6 @@ class ReflectionConfiguration {
     }
 
     companion object {
-        const val BASE_PACKAGE = "kr.smartdoctor.api.reservationplatform"
+        const val BASE_PACKAGE = "community.mingle.mingledemo"
     }
 }
