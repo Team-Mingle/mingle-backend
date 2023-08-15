@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: add default values for member_role_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO member_role_type (role) VALUES ('USER'), ('ADMIN'), ('KSA')
+  - changeSet:
+      id: add default values for member_status_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO member_status_type (status) VALUES ('ACTIVE'), ('INACTIVE'), ('REPORTED')
+
+  - changeSet:
+      id: add default values for notification_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO notification_type (notification) VALUES ('COMMENT'), ('COCOMMENT'), ('POPULAR'), ('REPORTED')
+
+  - changeSet:
+      id: add default values for report_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO report_type (report) VALUES ('INAPPROPRIATE'), ('SWEAR'), ('AD'), ('FRAUD'), ('19')
+
+  - changeSet:
+      id: add default values for board_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO board_type (board) VALUES ('TOTAL'), ('UNIV')
+
+  - changeSet:
+      id: add default values for category_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO category_type (category) VALUES ('FREE'), ('QNA'), ('MINGLE'), ('KSA')
+
+  - changeSet:
+      id: add default values for content_status_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO content_status_type (status) VALUES ('ACTIVE'), ('INACTIVE'), ('REPORTED'), ('NOTIFIED'), ('DELETED')
+
+  - changeSet:
+      id: add default values for content_type
+      author: Hyeonwoo Jung
+      changes:
+        - sql:
+            sql: INSERT INTO content_type (content) VALUES ('POST'), ('COMMENT')
