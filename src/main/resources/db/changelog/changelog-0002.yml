@@ -24,7 +24,7 @@ databaseChangeLog:
       author: Hyeonwoo Jung
       changes:
         - sql:
-            sql: INSERT INTO report_type (report) VALUES ('INAPPROPRIATE'), ('SWEAR'), ('AD'), ('FRAUD'), ('19')
+            sql: INSERT INTO report_type (report) VALUES ('INAPPROPRIATE'), ('SWEAR'), ('AD'), ('FRAUD'), ('OBSCENE')
 
   - changeSet:
       id: add default values for board_type
