@@ -19,11 +19,6 @@ class PostImage(
     @Column(name = "url", nullable = false)
     var url: String,
 
-    @NotNull
-    @CreatedDate
-    @Column(name = "created_at", nullable = false)
-    var createdAt: LocalDateTime,
-
     @Column(name = "deleted_at", nullable = false)
     var deletedAt: LocalDateTime,
 ) {
@@ -31,4 +26,9 @@ class PostImage(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     val id: Long? = null
+
+    @NotNull
+    @CreatedDate
+    @Column(name = "created_at", nullable = false)
+    lateinit var createdAt: LocalDateTime
 }
