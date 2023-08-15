@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: add foreign key constraint between comment and post_id
+      author: Hyeonwoo Jung
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: comment
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: id
+            constraintName: comment_post_id_fk
+
+  - changeSet:
+      id: add foreign key constraint between report and post_id, comment_id
+      author: Hyeonwoo Jung
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: report
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: id
+            constraintName: report_post_id_fk
+        - addForeignKeyConstraint:
+            baseTableName: report
+            baseColumnNames: comment_id
+            referencedTableName: comment
+            referencedColumnNames: id
+            constraintName: report_comment_id_fk

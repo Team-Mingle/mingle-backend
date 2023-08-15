@@ -123,7 +123,7 @@ databaseChangeLog:
                     nullable: false
                   name: comment_id
                   type: BIGINT
-            tableName: commnet_notification
+            tableName: comment_notification
   - changeSet:
       id: 1691839707105-6
       author: leojung (generated)
@@ -651,7 +651,7 @@ databaseChangeLog:
               - column:
                   name: comment_id
             indexName: comment_id
-            tableName: commnet_notification
+            tableName: comment_notification
   - changeSet:
       id: 1691839707105-29
       author: leojung (generated)
@@ -918,8 +918,8 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: id
-            baseTableName: commnet_notification
-            constraintName: commnet_notification_ibfk_1
+            baseTableName: comment_notification
+            constraintName: comment_notification_ibfk_1
             deferrable: false
             initiallyDeferred: false
             onDelete: RESTRICT
@@ -933,8 +933,8 @@ databaseChangeLog:
       changes:
         - addForeignKeyConstraint:
             baseColumnNames: comment_id
-            baseTableName: commnet_notification
-            constraintName: commnet_notification_ibfk_2
+            baseTableName: comment_notification
+            constraintName: comment_notification_ibfk_2
             deferrable: false
             initiallyDeferred: false
             onDelete: RESTRICT
