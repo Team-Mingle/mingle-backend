@@ -41,7 +41,8 @@ class AuthorizeRequestsApplierConfiguration {
     companion object {
         private val URLS_AUTHENTICATION = arrayOf(
             "/auth/**",
-            "/country"
+            "/country",
+            "/university/{countryName}"
         )
         private val URLS_DOCUMENT = arrayOf(
             "/swagger-ui/**",
