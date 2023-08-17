@@ -42,7 +42,7 @@ class AuthorizeRequestsApplierConfiguration {
         private val URLS_AUTHENTICATION = arrayOf(
             "/auth/**",
             "/country",
-            "/university/{countryName}"
+            "/university/**"
         )
         private val URLS_DOCUMENT = arrayOf(
             "/swagger-ui/**",
