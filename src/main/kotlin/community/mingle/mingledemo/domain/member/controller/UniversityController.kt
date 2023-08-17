@@ -1,5 +1,6 @@
 package community.mingle.mingledemo.domain.member.controller
 
+import community.mingle.mingledemo.domain.member.controller.response.EmailDomainResponse
 import community.mingle.mingledemo.domain.member.controller.response.UniversitiesResponse
 import community.mingle.mingledemo.domain.member.service.UniversityService
 import io.swagger.v3.oas.annotations.Operation
@@ -35,5 +36,14 @@ class UniversityController(
             )
         }
         return universitiesResponses
+    }
+
+    @GetMapping("/email/{universityId}")
+    fun getUniversityEmailDomains(
+        @PathVariable
+        universityId: Int
+    ): EmailDomainResponse {
+        val emailDomain = universityService.getUniversityEmailDomainById(universityId)
+        return EmailDomainResponse(emailDomain)
     }
 }
