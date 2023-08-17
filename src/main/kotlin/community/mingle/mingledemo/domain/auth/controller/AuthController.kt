@@ -24,7 +24,6 @@ class AuthController(
         ],
     )
     @PostMapping("/check-email")
-    @ResponseBody
     fun verifyEmail(
         @RequestBody
         @Valid
