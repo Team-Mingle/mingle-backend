@@ -6,9 +6,8 @@ import community.mingle.mingledemo.domain.member.service.UniversityService
 import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
-import community.mingle.mingledemo.exception.DuplicatedNicknameException
 import community.mingle.mingledemo.exception.InvalidPasswordException
-import community.mingle.mingledemo.exception.ReportedMemberSignUpException
+import community.mingle.mingledemo.exception.ReportedMemberLoginException
 import community.mingle.mingledemo.security.component.JwtHandler
 import org.springframework.stereotype.Service
 
@@ -48,7 +47,7 @@ class AuthService(
         }
 
         if (memberDto.status == MemberStatus.REPORTED) {
-            throw ReportedMemberSignUpException()
+            throw ReportedMemberLoginException()
         }
 
         return jwtHandler.createAccessToken(
