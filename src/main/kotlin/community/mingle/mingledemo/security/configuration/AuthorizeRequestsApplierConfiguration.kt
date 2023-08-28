@@ -12,6 +12,7 @@ class AuthorizeRequestsApplierConfiguration {
     @Profile(MingleDemo.Profile.LOCAL, MingleDemo.Profile.DEVELOP)
     @Bean(SecurityConfiguration.AUTHORIZE_REQUEST_APPLIER_BEAN_NAME)
     fun accessibleAuthorizeRequestsApplier(): AuthorizeRequestsApplier = {
+        //TODO memberGuard 설정
         it.authorizeHttpRequests()
             .requestMatchers(
                 *URLS_AUTHENTICATION,
