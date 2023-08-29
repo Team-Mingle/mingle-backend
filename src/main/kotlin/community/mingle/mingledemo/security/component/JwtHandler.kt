@@ -2,6 +2,9 @@ package community.mingle.mingledemo.security.component
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import community.mingle.mingledemo.domain.auth.entity.RefreshToken
+import community.mingle.mingledemo.domain.auth.repository.RefreshTokenRedisRepository
+import community.mingle.mingledemo.domain.auth.repository.RefreshTokenRedisRepository.Companion.find
 import community.mingle.mingledemo.enums.MemberRole
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
@@ -11,12 +14,13 @@ import java.util.*
 @Component
 class JwtHandler(
     private val tokenAlgorithm: Algorithm,
+    private val refreshTokenRedisRepository: RefreshTokenRedisRepository,
 ) {
 
     fun createAccessToken(
         memberId: Long,
         memberRole: MemberRole
-    ) = JWT.create()
+    ): String = JWT.create()
             .withClaim("memberId", memberId)
             .withClaim("memberRole", memberRole.toString())
             .withExpiresAt(
@@ -29,4 +33,36 @@ class JwtHandler(
                 )
             )
             .sign(tokenAlgorithm)
+
+    fun createRefreshToken(
+        memberId: Long,
+        memberRole: MemberRole
+    ): String {
+        val refreshToken = JWT.create()
+            .withClaim("memberId", memberId)
+            .withClaim("memberRole", memberRole.toString())
+            .withExpiresAt(
+                Date.from(
+                    LocalDateTime
+                        .now()
+                        .plusYears(1L)
+                        .atZone(ZoneId.of("Asia/Seoul"))
+                        .toInstant()
+                )
+            )
+            .sign(tokenAlgorithm)
+
+        refreshTokenRedisRepository.save(
+            RefreshToken(refreshToken)
+        )
+
+        return refreshToken
+    }
+
+    fun getRefreshToken(
+        refreshToken: String,
+    ) {
+        val refreshToken = refreshTokenRedisRepository.find(refreshToken)
+
+    }
 }

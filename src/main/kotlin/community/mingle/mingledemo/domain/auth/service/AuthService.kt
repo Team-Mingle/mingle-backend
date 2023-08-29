@@ -59,10 +59,21 @@ class AuthService(
             memberRole = memberDto.role
         )
 
+        val refreshToken = jwtHandler.createRefreshToken(
+            memberId = memberDto.id,
+            memberRole = memberDto.role
+        )
+
         return LoginDto(
             memberDto = memberDto,
-            accessToken = accessToken
+            accessToken = accessToken,
+            refreshToken = refreshToken
         )
+    }
+
+    fun reissueToken(
+        refreshToken: String
+    ) {
 
     }
 }

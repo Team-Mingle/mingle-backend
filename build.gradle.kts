@@ -36,6 +36,7 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.liquibase:liquibase-core")
+    implementation("org.springframework.boot", "spring-boot-starter-data-redis")
     implementation("org.reflections", "reflections", "0.10.2")
     implementation("com.auth0", "java-jwt", "4.3.0")
 
