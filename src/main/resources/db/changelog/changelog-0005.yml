@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: add unique key constraint to email column in member table
+      author: Hyeonwoo Jung
+      changes:
+        - addUniqueConstraint:
+            tableName: member
+            columnNames: email
+            constraintName: member_email_unique_key

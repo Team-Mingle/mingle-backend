@@ -12,12 +12,14 @@ import community.mingle.mingledemo.exception.DuplicatedEmailException
 import community.mingle.mingledemo.exception.DuplicatedNicknameException
 import community.mingle.mingledemo.exception.ReportedMemberSignUpException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class MemberService(
     private val memberRepository: MemberRepository,
 ) {
 
+    @Transactional
     fun createMember(
         university: University,
         nickname: String,
