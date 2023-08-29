@@ -5,10 +5,7 @@ import community.mingle.mingledemo.domain.auth.controller.request.LoginRequest
 import community.mingle.mingledemo.domain.auth.controller.request.SignUpRequest
 import community.mingle.mingledemo.domain.auth.controller.response.SignUpOrLoginResponse
 import community.mingle.mingledemo.domain.auth.service.AuthService
-import community.mingle.mingledemo.domain.auth.util.sha256
 import community.mingle.mingledemo.domain.member.service.MemberService
-import community.mingle.mingledemo.dto.member.MemberDto
-import community.mingle.mingledemo.exception.DuplicatedEmailException
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import jakarta.validation.Valid
