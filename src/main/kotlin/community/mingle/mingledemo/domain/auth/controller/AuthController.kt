@@ -4,11 +4,9 @@ import community.mingle.mingledemo.domain.auth.controller.request.EmailRequest
 import community.mingle.mingledemo.domain.auth.controller.request.LoginRequest
 import community.mingle.mingledemo.domain.auth.controller.request.SignUpRequest
 import community.mingle.mingledemo.domain.auth.controller.response.SignUpOrLoginResponse
-import community.mingle.mingledemo.domain.auth.entity.RefreshToken
 import community.mingle.mingledemo.domain.auth.service.AuthService
 import community.mingle.mingledemo.domain.member.service.MemberService
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.responses.ApiResponse
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
@@ -21,11 +19,6 @@ class AuthController(
 
     @Operation(
         summary = "회원가입 화면에서 이메일 형식 및 중복 검증",
-        responses = [
-            ApiResponse(responseCode = "200", description = "OK"),
-            ApiResponse(responseCode = "400", description = "DUPLICATED_EMAIL"),
-            ApiResponse(responseCode = "400", description = "DUPLICATED_EMAIL"),
-        ],
     )
     @PostMapping("/check-email")
     fun verifyEmail(
@@ -38,6 +31,9 @@ class AuthController(
         return true
     }
 
+    @Operation(
+        summary = "회원가입",
+    )
     @PostMapping("/sign-up")
     fun signUp(
         @RequestBody
@@ -66,12 +62,13 @@ class AuthController(
                 universityName = loginDto.memberDto.university.name,
                 accessToken = loginDto.accessToken
             )
-
-
         }
 
     }
 
+    @Operation(
+        summary = "로그인",
+    )
     @PostMapping("/login")
     fun login(
         @RequestBody
@@ -92,6 +89,9 @@ class AuthController(
         )
     }
 
+    @Operation(
+        summary = "토큰 재발급",
+    )
     @PostMapping("/reissue-token")
     fun reissueToken(
         @RequestHeader(value = "Authorization")
