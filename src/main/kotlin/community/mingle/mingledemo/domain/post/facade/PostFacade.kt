@@ -18,12 +18,19 @@ class PostFacade(
         categoryType: CategoryType,
         pageRequest: PageRequest
     ): List<PostsResponse> {
-        val posts = postService.getPosts(
-            memberId = memberId,
-            boardType = boardType,
-            categoryType = categoryType,
-            pageRequest = pageRequest
-        )
+        val posts =
+            if (boardType == BoardType.TOTAL) {
+                postService.getTotalPosts(
+                    categoryType = categoryType,
+                    pageRequest = pageRequest
+                )
+            } else {
+                postService.getUnivPosts(
+                    memberId = memberId,
+                    categoryType = categoryType,
+                    pageRequest = pageRequest
+                )
+            }
 
         return posts.map { post ->
             with(post) {
