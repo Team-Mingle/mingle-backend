@@ -4,6 +4,7 @@ import community.mingle.mingledemo.domain.auth.util.sha256
 import community.mingle.mingledemo.domain.member.service.MemberService
 import community.mingle.mingledemo.domain.member.service.UniversityService
 import community.mingle.mingledemo.dto.auth.LoginDto
+import community.mingle.mingledemo.dto.auth.TokenDto
 import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
@@ -11,15 +12,20 @@ import community.mingle.mingledemo.exception.InvalidPasswordException
 import community.mingle.mingledemo.exception.MemberNotFoundException
 import community.mingle.mingledemo.exception.ReportedMemberLoginException
 import community.mingle.mingledemo.security.component.JwtHandler
+import community.mingle.mingledemo.security.component.JwtVerifier
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AuthService(
     private val memberService: MemberService,
     private val universityService: UniversityService,
     private val jwtHandler: JwtHandler,
-){
+    private val jwtVerifier: JwtVerifier,
 
+    ) {
+
+    @Transactional
     fun signUp(
         universityId: Int,
         email: String,
@@ -45,7 +51,7 @@ class AuthService(
         password: String,
         fcmToken: String
     ): LoginDto {
-        val memberDto = memberService.getMemberByEmailOrNull(email)?:throw MemberNotFoundException()
+        val memberDto = memberService.getMemberByEmailOrNull(email) ?: throw MemberNotFoundException()
         if (memberDto.password != password.sha256()) {
             throw InvalidPasswordException()
         }
@@ -73,7 +79,22 @@ class AuthService(
 
     fun reissueToken(
         refreshToken: String
-    ) {
+    ): TokenDto {
+        val verifiedRefreshToken = jwtHandler.verifyRefreshToken(refreshToken)
+        val tokenDto = jwtVerifier.verifyIssuedToken(verifiedRefreshToken.refreshToken)
+        val reissuedAccessToken = jwtHandler.createAccessToken(
+            memberId = tokenDto.memberId,
+            memberRole = tokenDto.memberRole
+        )
 
+        val reissuedRefreshToken = jwtHandler.createRefreshToken(
+            memberId = tokenDto.memberId,
+            memberRole = tokenDto.memberRole
+        )
+
+        return TokenDto(
+            accessToken = reissuedAccessToken,
+            refreshToken = reissuedRefreshToken
+        )
     }
 }

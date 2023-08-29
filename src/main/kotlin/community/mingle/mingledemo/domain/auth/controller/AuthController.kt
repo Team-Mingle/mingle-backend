@@ -3,10 +3,13 @@ package community.mingle.mingledemo.domain.auth.controller
 import community.mingle.mingledemo.domain.auth.controller.request.EmailRequest
 import community.mingle.mingledemo.domain.auth.controller.request.LoginRequest
 import community.mingle.mingledemo.domain.auth.controller.request.SignUpRequest
+import community.mingle.mingledemo.domain.auth.controller.response.ReissueTokenResponse
 import community.mingle.mingledemo.domain.auth.controller.response.SignUpOrLoginResponse
 import community.mingle.mingledemo.domain.auth.service.AuthService
 import community.mingle.mingledemo.domain.member.service.MemberService
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.enums.ParameterIn
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 
@@ -60,7 +63,8 @@ class AuthController(
                 email = loginDto.memberDto.email,
                 nickname = loginDto.memberDto.nickname,
                 universityName = loginDto.memberDto.university.name,
-                accessToken = loginDto.accessToken
+                accessToken = loginDto.accessToken,
+                refreshToken = loginDto.refreshToken,
             )
         }
 
@@ -85,18 +89,25 @@ class AuthController(
             email = loginDto.memberDto.email,
             nickname = loginDto.memberDto.nickname,
             universityName = loginDto.memberDto.university.name,
-            accessToken = loginDto.accessToken
+            accessToken = loginDto.accessToken,
+            refreshToken = loginDto.refreshToken,
         )
     }
 
     @Operation(
         summary = "토큰 재발급",
     )
+    @Parameter(name = "Authorization", required = true, description = "RefreshToken", `in` = ParameterIn.HEADER)
     @PostMapping("/reissue-token")
     fun reissueToken(
         @RequestHeader(value = "Authorization")
         refreshToken: String,
-    ) {
+    ): ReissueTokenResponse {
+        val tokenDto = authService.reissueToken(refreshToken)
 
+        return ReissueTokenResponse(
+            accessToken = tokenDto.accessToken,
+            refreshToken = tokenDto.refreshToken
+        )
     }
 }
