@@ -1,6 +1,6 @@
 package community.mingle.mingledemo.security.bean
 
-import community.mingle.mingledemo.dto.TokenDto
+import community.mingle.mingledemo.dto.TokenContentDto
 import community.mingle.mingledemo.security.component.JwtVerifier
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -12,7 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtFilter(
     private val jwtVerifier: JwtVerifier,
-): OncePerRequestFilter() {
+) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
@@ -26,11 +26,11 @@ class JwtFilter(
     }
 
     private fun authenticate(
-        tokenDto: TokenDto?,
+        tokenContentDto: TokenContentDto?,
     ): UsernamePasswordAuthenticationToken? {
-        val authenticationToken = if (tokenDto != null)
+        val authenticationToken = if (tokenContentDto != null)
             UsernamePasswordAuthenticationToken(
-                tokenDto,
+                tokenContentDto,
                 listOf(SimpleGrantedAuthority("AUTHORIZED")),
             )
         else null

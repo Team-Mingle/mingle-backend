@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
-import community.mingle.mingledemo.dto.TokenDto
+import community.mingle.mingledemo.dto.TokenContentDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.exception.AuthenticateFailedException
 import community.mingle.mingledemo.exception.JwtTokenExpiredException
@@ -17,49 +17,43 @@ import org.springframework.stereotype.Component
 class JwtVerifier(
     private val tokenAlgorithm: Algorithm,
     private val secretsManagerService: SecretsManagerService,
-){
+) {
     val tokenVerifier: JWTVerifier = JWT
         .require(tokenAlgorithm)
         .withClaimPresence("memberId")
         .withClaimPresence("memberRole")
         .build()
 
-    fun verify(request: HttpServletRequest): TokenDto? {
+    fun verify(request: HttpServletRequest): TokenContentDto? {
         val bearerToken = request.getHeader("Authorization") ?: return null
         if (!bearerToken.startsWith("Bearer ")) return null
 
         return verifyToken(bearerToken)
     }
 
-    fun verifyToken(bearerToken: String): TokenDto {
+    fun verifyToken(bearerToken: String): TokenContentDto {
         try {
             val verification = with(secretsManagerService.getJwtDevToken()) {
                 when (val token = bearerToken.substring(7)) {
                     mingleUser
-                    -> TokenDto(
+                    -> TokenContentDto(
                         memberId = 1L,
                         memberRole = MemberRole.USER
                     )
 
                     mingleAdmin
-                    -> TokenDto(
+                    -> TokenContentDto(
                         memberId = 2L,
                         memberRole = MemberRole.ADMIN
                     )
 
                     mingleKsa
-                    -> TokenDto(
+                    -> TokenContentDto(
                         memberId = 3L,
                         memberRole = MemberRole.KSA
                     )
 
-                    else -> {
-                        val verifiedJWT = tokenVerifier.verify(token)
-                        TokenDto(
-                            memberId = verifiedJWT.getClaim("memberId").asLong(),
-                            memberRole = MemberRole.valueOf(verifiedJWT.getClaim("memberRole").asString()),
-                        )
-                    }
+                    else -> verifyIssuedToken(token)
                 }
             }
             return verification
@@ -68,5 +62,15 @@ class JwtVerifier(
         } catch (e: JWTVerificationException) {
             throw AuthenticateFailedException()
         }
+    }
+
+    fun verifyIssuedToken(
+        token: String
+    ): TokenContentDto {
+        val verifiedJWT = tokenVerifier.verify(token)
+        return TokenContentDto(
+            memberId = verifiedJWT.getClaim("memberId").asLong(),
+            memberRole = MemberRole.valueOf(verifiedJWT.getClaim("memberRole").asString()),
+        )
     }
 }
