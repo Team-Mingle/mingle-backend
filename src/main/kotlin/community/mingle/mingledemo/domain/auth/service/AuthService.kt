@@ -3,6 +3,7 @@ package community.mingle.mingledemo.domain.auth.service
 import community.mingle.mingledemo.domain.auth.util.sha256
 import community.mingle.mingledemo.domain.member.service.MemberService
 import community.mingle.mingledemo.domain.member.service.UniversityService
+import community.mingle.mingledemo.dto.auth.LoginDto
 import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
@@ -40,7 +41,7 @@ class AuthService(
         email: String,
         password: String,
         fcmToken: String
-    ): String {
+    ): LoginDto {
         val memberDto = memberService.getMemberByEmail(email)
         if (memberDto.password != password.sha256()) {
             throw InvalidPasswordException()
@@ -50,9 +51,14 @@ class AuthService(
             throw ReportedMemberLoginException()
         }
 
-        return jwtHandler.createAccessToken(
+        val accessToken = jwtHandler.createAccessToken(
             memberId = memberDto.id!!,
             memberRole = memberDto.role
+        )
+
+        return LoginDto(
+            memberDto = memberDto,
+            accessToken = accessToken
         )
 
     }

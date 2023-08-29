@@ -47,26 +47,25 @@ class AuthController(
         signUpRequest: SignUpRequest
     ): SignUpOrLoginResponse {
         with(signUpRequest) {
-            val memberDto = authService.signUp(
+            authService.signUp(
                 universityId = universityId,
                 email = email,
                 password = password,
                 nickname = nickname
             )
 
-            val accessToken = authService.login(
+            val loginDto = authService.login(
                 email = email,
                 password = password,
                 fcmToken = fcmToken,
             )
 
             return SignUpOrLoginResponse(
-                memberId = memberDto.id!!,
-                email = memberDto.email,
-                nickname = memberDto.nickname,
-                universityName = memberDto.university.name,
-                accessToken = accessToken
-
+                memberId = loginDto.memberDto.id!!,
+                email = loginDto.memberDto.email,
+                nickname = loginDto.memberDto.nickname,
+                universityName = loginDto.memberDto.university.name,
+                accessToken = loginDto.accessToken
             )
 
 
@@ -79,7 +78,18 @@ class AuthController(
         @RequestBody
         @Valid
         loginRequest: LoginRequest
-    ) {
-
+    ): SignUpOrLoginResponse {
+        val loginDto = authService.login(
+            email = loginRequest.email,
+            password = loginRequest.password,
+            fcmToken = loginRequest.fcmToken,
+        )
+        return SignUpOrLoginResponse(
+            memberId = loginDto.memberDto.id!!,
+            email = loginDto.memberDto.email,
+            nickname = loginDto.memberDto.nickname,
+            universityName = loginDto.memberDto.university.name,
+            accessToken = loginDto.accessToken
+        )
     }
 }
