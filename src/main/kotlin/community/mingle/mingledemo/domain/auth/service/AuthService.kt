@@ -36,7 +36,7 @@ class AuthService(
         memberService.checkDuplicatedNickName(nickname)
         memberService.validateReportedStatus(email)
         val university = universityService.getUniversityById(universityId)
-        return memberService.createMember(
+        return memberService.create(
             university = university,
             email = email,
             password = password,
@@ -51,7 +51,7 @@ class AuthService(
         password: String,
         fcmToken: String
     ): LoginDto {
-        val memberDto = memberService.getMemberByEmailOrNull(email) ?: throw MemberNotFoundException()
+        val memberDto = memberService.getByEmailOrNull(email) ?: throw MemberNotFoundException()
         if (memberDto.password != password.sha256()) {
             throw InvalidPasswordException()
         }
