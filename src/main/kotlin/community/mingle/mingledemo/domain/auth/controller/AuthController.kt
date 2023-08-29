@@ -30,7 +30,7 @@ class AuthController(
         emailRequest: EmailRequest
     ): Boolean {
         val email = emailRequest.email
-        memberService.checkMemberExistedByEmail(email)
+        memberService.checkExistenceByEmail(email)
         return true
     }
 

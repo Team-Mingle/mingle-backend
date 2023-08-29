@@ -4,6 +4,7 @@ import community.mingle.mingledemo.domain.auth.util.sha256
 import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.member.entity.University
 import community.mingle.mingledemo.domain.member.repository.MemberRepository
+import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
 import community.mingle.mingledemo.domain.member.util.MemberDtoUtil.toDto
 import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
@@ -20,7 +21,7 @@ class MemberService(
 ) {
 
     @Transactional
-    fun createMember(
+    fun create(
         university: University,
         nickname: String,
         email: String,
@@ -42,18 +43,23 @@ class MemberService(
         return member.toDto()
     }
 
-    fun getMemberByEmailOrNull(email: String): MemberDto? {
+    fun getById(id: Long): MemberDto {
+        val member = memberRepository.find(id)
+        return member.toDto()
+    }
+
+    fun getByEmailOrNull(email: String): MemberDto? {
         val encryptedEmail = email.sha256()
         val member = memberRepository.findByEmail(encryptedEmail)
         return member?.toDto()
     }
 
-    fun checkMemberExistedByEmail(email: String) {
+    fun checkExistenceByEmail(email: String) {
         if (isMemberExistedByEmail(email)) throw DuplicatedEmailException()
     }
 
     fun validateReportedStatus(email: String) {
-        val memberDto = getMemberByEmailOrNull(email)
+        val memberDto = getByEmailOrNull(email)
         if (memberDto?.status == MemberStatus.REPORTED) {
             throw ReportedMemberSignUpException()
         }
