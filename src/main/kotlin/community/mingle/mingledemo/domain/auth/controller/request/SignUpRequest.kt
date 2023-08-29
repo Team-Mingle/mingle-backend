@@ -22,5 +22,7 @@ data class SignUpRequest (
     @field:NotBlank(message = "NICKNAME SHOULD NOT BE EMPTY")
     val nickname: String,
 
+    @field:NotEmpty
+    @field:NotBlank(message = "FCM TOKEN SHOULD NOT BE EMPTY")
     val fcmToken: String,
 ): Serializable

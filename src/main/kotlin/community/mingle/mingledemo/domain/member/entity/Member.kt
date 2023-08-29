@@ -27,9 +27,11 @@ class Member(
     @Column(name = "password", nullable = false, length = 100)
     var password: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     var status: MemberStatus,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     var role: MemberRole,
 
@@ -41,7 +43,7 @@ class Member(
 
     @Column(name = "fcm_token")
     var fcmToken: String? = null,
-) : AuditLoggingBase() {
+): AuditLoggingBase() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)

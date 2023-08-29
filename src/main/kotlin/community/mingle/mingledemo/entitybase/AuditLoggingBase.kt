@@ -11,7 +11,6 @@ import java.time.LocalDateTime
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-
 abstract class AuditLoggingBase {
     @NotNull
     @Column(name = "created_at")

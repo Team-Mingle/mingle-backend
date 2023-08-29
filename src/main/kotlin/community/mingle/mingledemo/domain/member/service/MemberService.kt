@@ -25,6 +25,7 @@ class MemberService(
         email: String,
         password: String,
         role: MemberRole,
+        fcmToken: String,
     ): MemberDto {
         val member = memberRepository.save(
             Member(
@@ -33,16 +34,17 @@ class MemberService(
                 email = email.sha256(),
                 password = password.sha256(),
                 role = role,
-                status = MemberStatus.ACTIVE
+                status = MemberStatus.ACTIVE,
+                fcmToken = fcmToken
             )
         )
         return member.toDto()
     }
 
-    fun getMemberByEmail(email: String): MemberDto {
+    fun getMemberByEmailOrNull(email: String): MemberDto? {
         val encryptedEmail = email.sha256()
-        val member = memberRepository.findByEmail(encryptedEmail) ?:throw MemberNotFoundException()
-        return member.toDto()
+        val member = memberRepository.findByEmail(encryptedEmail)
+        return member?.toDto()
     }
 
     fun checkMemberExistedByEmail(email: String) {
@@ -50,8 +52,8 @@ class MemberService(
     }
 
     fun validateReportedStatus(email: String) {
-        val memberDto = getMemberByEmail(email)
-        if (memberDto.status == MemberStatus.REPORTED) {
+        val memberDto = getMemberByEmailOrNull(email)
+        if (memberDto?.status == MemberStatus.REPORTED) {
             throw ReportedMemberSignUpException()
         }
     }

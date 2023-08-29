@@ -48,7 +48,8 @@ class AuthController(
                 universityId = universityId,
                 email = email,
                 password = password,
-                nickname = nickname
+                nickname = nickname,
+                fcmToken = fcmToken
             )
 
             val loginDto = authService.login(

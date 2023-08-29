@@ -8,6 +8,7 @@ import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
 import community.mingle.mingledemo.exception.InvalidPasswordException
+import community.mingle.mingledemo.exception.MemberNotFoundException
 import community.mingle.mingledemo.exception.ReportedMemberLoginException
 import community.mingle.mingledemo.security.component.JwtHandler
 import org.springframework.stereotype.Service
@@ -24,6 +25,7 @@ class AuthService(
         email: String,
         password: String,
         nickname: String,
+        fcmToken: String,
     ): MemberDto {
         memberService.checkDuplicatedNickName(nickname)
         memberService.validateReportedStatus(email)
@@ -33,7 +35,8 @@ class AuthService(
             email = email,
             password = password,
             nickname = nickname,
-            role = MemberRole.USER
+            role = MemberRole.USER,
+            fcmToken = fcmToken
         )
     }
 
@@ -42,7 +45,7 @@ class AuthService(
         password: String,
         fcmToken: String
     ): LoginDto {
-        val memberDto = memberService.getMemberByEmail(email)
+        val memberDto = memberService.getMemberByEmailOrNull(email)?:throw MemberNotFoundException()
         if (memberDto.password != password.sha256()) {
             throw InvalidPasswordException()
         }
