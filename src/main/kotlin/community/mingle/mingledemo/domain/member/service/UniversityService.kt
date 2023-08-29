@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service
 class UniversityService(
     private val universityRepository: UniversityRepository,
 ) {
+
+    fun getUniversityById(universityId: Int) = universityRepository.find(universityId)
+
     fun getUniversitiesByCountry(
         countryName: String
     ): List<UniversityDto> {

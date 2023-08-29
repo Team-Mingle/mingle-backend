@@ -1,9 +1,11 @@
 package community.mingle.mingledemo.domain.auth.controller
 
 import community.mingle.mingledemo.domain.auth.controller.request.EmailRequest
-import community.mingle.mingledemo.domain.auth.util.sha256
+import community.mingle.mingledemo.domain.auth.controller.request.LoginRequest
+import community.mingle.mingledemo.domain.auth.controller.request.SignUpRequest
+import community.mingle.mingledemo.domain.auth.controller.response.SignUpOrLoginResponse
+import community.mingle.mingledemo.domain.auth.service.AuthService
 import community.mingle.mingledemo.domain.member.service.MemberService
-import community.mingle.mingledemo.exception.DuplicatedEmailException
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import jakarta.validation.Valid
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/auth")
 class AuthController(
     private val memberService: MemberService,
+    private val authService: AuthService,
 ) {
 
     @Operation(
@@ -30,9 +33,60 @@ class AuthController(
         emailRequest: EmailRequest
     ): Boolean {
         val email = emailRequest.email
+        memberService.checkMemberExistedByEmail(email)
+        return true
+    }
 
-        if (memberService.isMemberExistedByEmail(email.sha256())) {
-            throw DuplicatedEmailException()
-        } else return true
+    @PostMapping("/sign-up")
+    fun signUp(
+        @RequestBody
+        @Valid
+        signUpRequest: SignUpRequest
+    ): SignUpOrLoginResponse {
+        with(signUpRequest) {
+            authService.signUp(
+                universityId = universityId,
+                email = email,
+                password = password,
+                nickname = nickname
+            )
+
+            val loginDto = authService.login(
+                email = email,
+                password = password,
+                fcmToken = fcmToken,
+            )
+
+            return SignUpOrLoginResponse(
+                memberId = loginDto.memberDto.id!!,
+                email = loginDto.memberDto.email,
+                nickname = loginDto.memberDto.nickname,
+                universityName = loginDto.memberDto.university.name,
+                accessToken = loginDto.accessToken
+            )
+
+
+        }
+
+    }
+
+    @PostMapping("/login")
+    fun login(
+        @RequestBody
+        @Valid
+        loginRequest: LoginRequest
+    ): SignUpOrLoginResponse {
+        val loginDto = authService.login(
+            email = loginRequest.email,
+            password = loginRequest.password,
+            fcmToken = loginRequest.fcmToken,
+        )
+        return SignUpOrLoginResponse(
+            memberId = loginDto.memberDto.id!!,
+            email = loginDto.memberDto.email,
+            nickname = loginDto.memberDto.nickname,
+            universityName = loginDto.memberDto.university.name,
+            accessToken = loginDto.accessToken
+        )
     }
 }

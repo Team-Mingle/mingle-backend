@@ -12,6 +12,7 @@ class TokenAlgorithmConfiguration(
     @Bean
     fun tokenAlgorithm(): Algorithm {
         val secret = secretsManagerService.getJwtSecretKey()
-        return Algorithm.HMAC256(secret)
+        //TODO aws secret manager 설정 후 jwt key 받아오기
+        return Algorithm.HMAC256("secret")
     }
 }

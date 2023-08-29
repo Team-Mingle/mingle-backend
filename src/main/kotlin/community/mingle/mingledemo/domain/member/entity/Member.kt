@@ -40,7 +40,7 @@ class Member(
     var deletedAt: LocalDateTime? = null,
 
     @Column(name = "fcm_token")
-    var fcmToken: String,
+    var fcmToken: String? = null,
 ) : AuditLoggingBase() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
