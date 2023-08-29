@@ -10,7 +10,6 @@ import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
 import community.mingle.mingledemo.exception.DuplicatedEmailException
 import community.mingle.mingledemo.exception.DuplicatedNicknameException
-import community.mingle.mingledemo.exception.MemberNotFoundException
 import community.mingle.mingledemo.exception.ReportedMemberSignUpException
 import org.springframework.stereotype.Service
 
