@@ -4,7 +4,7 @@ import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.entitybase.AuditLoggingBase
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
-import community.mingle.mingledemo.enums.ContentType
+import community.mingle.mingledemo.enums.ContentStatusType
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
@@ -25,11 +25,13 @@ class Post(
     @Column(name = "content", nullable = false)
     var content: String,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "board", nullable = false)
-    var board: BoardType,
+    var boardType: BoardType,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "category", nullable = false)
-    var category: CategoryType,
+    var categoryType: CategoryType,
 
     @Column(name = "anonymous", nullable = false)
     var anonymous: Boolean,
@@ -37,8 +39,9 @@ class Post(
     @Column(name = "file_attached", nullable = false)
     var fileAttached: Boolean,
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    var status: ContentType,
+    var status: ContentStatusType,
 
     @Column(name = "view_count")
     var viewCount: Int,
@@ -53,4 +56,10 @@ class Post(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     var postImages = mutableListOf<PostImage>()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    var postLikes = mutableListOf<PostLike>()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    var postScraps = mutableListOf<PostScrap>()
 }
