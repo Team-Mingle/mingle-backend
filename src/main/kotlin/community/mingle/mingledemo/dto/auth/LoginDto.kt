@@ -1,9 +1,9 @@
 package community.mingle.mingledemo.dto.auth
 
-import community.mingle.mingledemo.dto.member.MemberDto
+import community.mingle.mingledemo.domain.member.entity.Member
 
 data class LoginDto(
-    val memberDto: MemberDto,
+    val member: Member,
     val accessToken: String,
     val refreshToken: String,
 )

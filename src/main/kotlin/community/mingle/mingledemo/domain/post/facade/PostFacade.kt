@@ -20,7 +20,7 @@ class PostFacade(
         categoryType: CategoryType,
         pageRequest: PageRequest
     ): List<PostsResponse> {
-        val memberDto = memberService.getById(memberId)
+        val member = memberService.getById(memberId)
         val posts =
             if (boardType == BoardType.TOTAL) {
                 postService.getTotalPosts(
@@ -29,7 +29,7 @@ class PostFacade(
                 )
             } else {
                 postService.getUnivPosts(
-                    memberDto = memberDto,
+                    member = member,
                     categoryType = categoryType,
                     pageRequest = pageRequest
                 )

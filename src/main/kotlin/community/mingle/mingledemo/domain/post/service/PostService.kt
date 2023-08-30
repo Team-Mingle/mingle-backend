@@ -1,9 +1,8 @@
 package community.mingle.mingledemo.domain.post.service
 
-import community.mingle.mingledemo.domain.member.service.MemberService
+import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.domain.post.repository.PostRepository
-import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.CategoryType
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
@@ -15,13 +14,13 @@ class PostService(
 
 
     fun getUnivPosts(
-        memberDto: MemberDto,
+        member: Member,
         categoryType: CategoryType,
         pageRequest: PageRequest
     ): MutableList<Post> {
         val posts = postRepository.findAllByCategoryTypeAndBoardTypeIsUnivAndMemberUniversityId(
             categoryType = categoryType,
-            universityId = memberDto.university.id!!,
+            universityId = member.university.id!!,
             pageable = pageRequest
         )
         return posts.content

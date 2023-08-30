@@ -59,10 +59,10 @@ class AuthController(
             )
 
             return SignUpOrLoginResponse(
-                memberId = loginDto.memberDto.id!!,
-                email = loginDto.memberDto.email,
-                nickname = loginDto.memberDto.nickname,
-                universityName = loginDto.memberDto.university.name,
+                memberId = loginDto.member.id!!,
+                email = loginDto.member.email,
+                nickname = loginDto.member.nickname,
+                universityName = loginDto.member.university.name,
                 accessToken = loginDto.accessToken,
                 refreshToken = loginDto.refreshToken,
             )
@@ -85,10 +85,10 @@ class AuthController(
             fcmToken = loginRequest.fcmToken,
         )
         return SignUpOrLoginResponse(
-            memberId = loginDto.memberDto.id!!,
-            email = loginDto.memberDto.email,
-            nickname = loginDto.memberDto.nickname,
-            universityName = loginDto.memberDto.university.name,
+            memberId = loginDto.member.id!!,
+            email = loginDto.member.email,
+            nickname = loginDto.member.nickname,
+            universityName = loginDto.member.university.name,
             accessToken = loginDto.accessToken,
             refreshToken = loginDto.refreshToken,
         )
