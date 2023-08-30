@@ -1,7 +1,6 @@
 spring:
   liquibase:
     change-log: db/db.changelog-main.yml
-
   jpa:
     properties:
       hibernate:
@@ -9,6 +8,18 @@ spring:
         format_sql: true
         use_sql_comments: true
         default_batch_fetch_size: 100
-
+logging:
+  level:
+    root: WARN
+    web: DEBUG
+    reactor:
+      netty: DEBUG
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+      hibernate:
+        SQL: DEBUG
 server:
   port: 9090

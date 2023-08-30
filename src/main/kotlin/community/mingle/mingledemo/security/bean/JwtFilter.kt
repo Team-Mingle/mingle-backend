@@ -31,6 +31,7 @@ class JwtFilter(
         val authenticationToken = if (tokenContentDto != null)
             UsernamePasswordAuthenticationToken(
                 tokenContentDto,
+                tokenContentDto.memberId,
                 listOf(SimpleGrantedAuthority("AUTHORIZED")),
             )
         else null

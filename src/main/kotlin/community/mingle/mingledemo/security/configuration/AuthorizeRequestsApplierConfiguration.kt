@@ -42,7 +42,6 @@ class AuthorizeRequestsApplierConfiguration {
     companion object {
         private val URLS_AUTHENTICATION = arrayOf(
             "/auth/**",
-            "/post/**",
             "/country",
             "/university/**"
         )
