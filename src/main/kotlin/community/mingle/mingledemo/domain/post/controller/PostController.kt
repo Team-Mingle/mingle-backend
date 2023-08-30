@@ -20,7 +20,6 @@ class PostController(
     private val tokenParser: TokenParser,
     private val postFacade: PostFacade,
 ) {
-
     @GetMapping
     fun getPosts(
         @RequestParam
@@ -31,6 +30,7 @@ class PostController(
         pageable: Pageable
     ): List<PostsResponse> {
         val memberId = tokenParser.getMemberId()
+
         return postFacade.getPosts(
             memberId = memberId,
             boardType = boardType,
