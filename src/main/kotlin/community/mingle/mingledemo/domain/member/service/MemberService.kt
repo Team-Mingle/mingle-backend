@@ -5,8 +5,6 @@ import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.member.entity.University
 import community.mingle.mingledemo.domain.member.repository.MemberRepository
 import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
-import community.mingle.mingledemo.domain.member.util.MemberDtoUtil.toDto
-import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
 import community.mingle.mingledemo.exception.DuplicatedEmailException
@@ -28,8 +26,8 @@ class MemberService(
         password: String,
         role: MemberRole,
         fcmToken: String,
-    ): MemberDto {
-        val member = memberRepository.save(
+    ): Member {
+        return memberRepository.save(
             Member(
                 university = university,
                 nickname = nickname,
@@ -40,18 +38,13 @@ class MemberService(
                 fcmToken = fcmToken
             )
         )
-        return member.toDto()
     }
 
-    fun getById(id: Long): MemberDto {
-        val member = memberRepository.find(id)
-        return member.toDto()
-    }
+    fun getById(id: Long): Member = memberRepository.find(id)
 
-    fun getByEmailOrNull(email: String): MemberDto? {
+    fun getByEmailOrNull(email: String): Member? {
         val encryptedEmail = email.sha256()
-        val member = memberRepository.findByEmail(encryptedEmail)
-        return member?.toDto()
+        return memberRepository.findByEmail(encryptedEmail)
     }
 
     fun checkExistenceByEmail(email: String) {
@@ -59,8 +52,8 @@ class MemberService(
     }
 
     fun validateReportedStatus(email: String) {
-        val memberDto = getByEmailOrNull(email)
-        if (memberDto?.status == MemberStatus.REPORTED) {
+        val member = getByEmailOrNull(email)
+        if (member?.status == MemberStatus.REPORTED) {
             throw ReportedMemberSignUpException()
         }
     }

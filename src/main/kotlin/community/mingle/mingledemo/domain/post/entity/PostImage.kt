@@ -20,7 +20,7 @@ class PostImage(
     var url: String,
 
     @Column(name = "deleted_at", nullable = false)
-    var deletedAt: LocalDateTime,
+    var deletedAt: LocalDateTime? = null,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

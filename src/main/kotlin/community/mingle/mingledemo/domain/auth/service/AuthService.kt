@@ -1,11 +1,11 @@
 package community.mingle.mingledemo.domain.auth.service
 
 import community.mingle.mingledemo.domain.auth.util.sha256
+import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.member.service.MemberService
 import community.mingle.mingledemo.domain.member.service.UniversityService
 import community.mingle.mingledemo.dto.auth.LoginDto
 import community.mingle.mingledemo.dto.auth.TokenDto
-import community.mingle.mingledemo.dto.member.MemberDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
 import community.mingle.mingledemo.exception.InvalidPasswordException
@@ -32,7 +32,7 @@ class AuthService(
         password: String,
         nickname: String,
         fcmToken: String,
-    ): MemberDto {
+    ): Member {
         memberService.checkDuplicatedNickName(nickname)
         memberService.validateReportedStatus(email)
         val university = universityService.getUniversityById(universityId)
@@ -51,27 +51,27 @@ class AuthService(
         password: String,
         fcmToken: String
     ): LoginDto {
-        val memberDto = memberService.getByEmailOrNull(email) ?: throw MemberNotFoundException()
-        if (memberDto.password != password.sha256()) {
+        val member = memberService.getByEmailOrNull(email) ?: throw MemberNotFoundException()
+        if (member.password != password.sha256()) {
             throw InvalidPasswordException()
         }
 
-        if (memberDto.status == MemberStatus.REPORTED) {
+        if (member.status == MemberStatus.REPORTED) {
             throw ReportedMemberLoginException()
         }
 
         val accessToken = jwtHandler.createAccessToken(
-            memberId = memberDto.id!!,
-            memberRole = memberDto.role
+            memberId = member.id!!,
+            memberRole = member.role
         )
 
         val refreshToken = jwtHandler.createRefreshToken(
-            memberId = memberDto.id,
-            memberRole = memberDto.role
+            memberId = member.id,
+            memberRole = member.role
         )
 
         return LoginDto(
-            memberDto = memberDto,
+            member = member,
             accessToken = accessToken,
             refreshToken = refreshToken
         )

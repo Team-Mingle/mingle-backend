@@ -6,5 +6,5 @@ import org.springframework.http.HttpStatus
 class CustomMethodArgumentNotValidException(reasonName: String): ResponseStatusReasonException(
     statusCode = HttpStatus.UNAUTHORIZED,
     reasonName = reasonName,
-    reasonMessage = "잘못된 인증 정보입니다.",
+    reasonMessage = "잘못된 정보입니다.",
 )
