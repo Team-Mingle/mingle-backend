@@ -41,13 +41,13 @@ class Post(
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    var status: ContentStatusType,
+    var status: ContentStatusType = ContentStatusType.ACTIVE,
 
     @Column(name = "view_count")
-    var viewCount: Int,
+    var viewCount: Int = 0,
 
     @Column(name = "deleted_at")
-    var deletedAt: LocalDateTime,
+    var deletedAt: LocalDateTime? = null,
 ) : AuditLoggingBase() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
