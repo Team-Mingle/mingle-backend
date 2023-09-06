@@ -12,8 +12,6 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.ModelAttribute
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -34,7 +32,7 @@ class PostController(
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
         val post = with(createPostRequest) {
-             postFacade.createPost(
+             postFacade.create(
                 memberId = memberId,
                 title = title,
                 content = content,
@@ -43,20 +41,21 @@ class PostController(
                 anonymous = anonymous,
             )
         }
+
         return with(post) {
             CreatePostResponse(
-                postId = id!!,
-                title = title,
-                content = content,
-                boardType = boardType,
-                categoryType = categoryType,
-                anonymous = anonymous
+                    postId = id!!,
+                    title = title,
+                    content = content,
+                    boardType = boardType,
+                    categoryType = categoryType,
+                    anonymous = anonymous
             )
         }
     }
 
     @GetMapping
-    fun getPosts(
+    fun pagePosts(
         @RequestParam
         boardType: BoardType,
         @RequestParam
@@ -66,16 +65,35 @@ class PostController(
     ): List<PostsResponse> {
         val memberId = tokenParser.getMemberId()
 
-        return postFacade.getPosts(
-            memberId = memberId,
-            boardType = boardType,
-            categoryType = categoryType,
-            pageRequest = PageRequest.of(
-                pageable.pageNumber,
-                pageable.pageSize,
-                Sort.Direction.DESC,
-                "createdAt"
-            )
+        val pagePosts = postFacade.pagePosts(
+                memberId = memberId,
+                boardType = boardType,
+                categoryType = categoryType,
+                pageRequest = PageRequest.of(
+                        pageable.pageNumber,
+                        pageable.pageSize,
+                        Sort.Direction.DESC,
+                        "createdAt"
+                )
         )
+
+        return pagePosts.map { post ->
+            with(post) {
+                PostsResponse(
+                        memberId = post.member.id!!,
+                        title = title,
+                        content = content,
+                        board = this.boardType,
+                        category = this.categoryType,
+                        anonymous = anonymous,
+                        fileAttached = fileAttached,
+                        status = status,
+                        viewCount = viewCount,
+                        postLikeCount = postLikes.size,
+                        postScrapCount = postScraps.size,
+                        createdAt = createdAt
+                )
+            }
+        }
     }
 }

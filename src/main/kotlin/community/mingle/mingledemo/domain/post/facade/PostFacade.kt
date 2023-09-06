@@ -1,5 +1,6 @@
 package community.mingle.mingledemo.domain.post.facade
 
+import community.mingle.mingledemo.domain.post.controller.response.CreatePostResponse
 import community.mingle.mingledemo.domain.post.controller.response.PostsResponse
 import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.domain.post.service.PostService
@@ -12,15 +13,14 @@ import org.springframework.stereotype.Service
 class PostFacade(
     private val postService: PostService,
 ) {
-    fun createPost(
+    fun create(
         memberId: Long,
         title: String,
         content: String,
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
-    ): Post {
-        val post = postService.createPost(
+    ): Post = postService.create(
             memberId = memberId,
             title = title,
             content = content,
@@ -29,48 +29,23 @@ class PostFacade(
             anonymous = anonymous,
         )
 
-        return post
-    }
-
-    fun getPosts(
+    fun pagePosts(
         memberId: Long,
         boardType: BoardType,
         categoryType: CategoryType,
         pageRequest: PageRequest
-    ): List<PostsResponse> {
-        val posts =
-            if (boardType == BoardType.TOTAL) {
-                postService.getTotalPosts(
-                    categoryType = categoryType,
-                    pageRequest = pageRequest
-                )
-            } else {
-                postService.getUnivPosts(
-                    memberId = memberId,
-                    categoryType = categoryType,
-                    pageRequest = pageRequest
-                )
-            }
-
-        return posts.map { post ->
-            with(post) {
-                PostsResponse(
-                    memberId = post.member.id!!,
-                    title = title,
-                    content = content,
-                    board = this.boardType,
-                    category = this.categoryType,
-                    anonymous = anonymous,
-                    fileAttached = fileAttached,
-                    status = status,
-                    viewCount = viewCount,
-                    postLikeCount = postLikes.size,
-                    postScrapCount = postScraps.size,
-                    postImages = postImages,
-                    createdAt = createdAt
-                )
-            }
+    ): MutableList<Post> =
+        if (boardType == BoardType.TOTAL) {
+            postService.getTotalPostsByCategory(
+                categoryType = categoryType,
+                pageRequest = pageRequest
+            )
+        } else {
+            postService.getUnivPostsByCategory(
+                memberId = memberId,
+                categoryType = categoryType,
+                pageRequest = pageRequest
+            )
         }
-    }
 
 }

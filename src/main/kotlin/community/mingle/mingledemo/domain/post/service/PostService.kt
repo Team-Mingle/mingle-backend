@@ -8,7 +8,6 @@ import community.mingle.mingledemo.domain.post.repository.PostRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository.Companion.find
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
-import community.mingle.mingledemo.enums.ContentStatusType
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 
@@ -18,7 +17,7 @@ class PostService(
     private val memberRepository: MemberRepository,
 ) {
 
-    fun createPost(
+    fun create(
         memberId: Long,
         title: String,
         content: String,
@@ -39,7 +38,7 @@ class PostService(
         ).run { postRepository.save(this) }
     }
 
-    fun getUnivPosts(
+    fun getUnivPostsByCategory(
         memberId: Long,
         categoryType: CategoryType,
         pageRequest: PageRequest
@@ -53,7 +52,7 @@ class PostService(
         return posts.content
     }
 
-    fun getTotalPosts(
+    fun getTotalPostsByCategory(
         categoryType: CategoryType,
         pageRequest: PageRequest
     ): MutableList<Post> {
@@ -62,17 +61,6 @@ class PostService(
             pageable = pageRequest
         )
         return posts.content
-    }
-
-    fun createPostImage(
-        postId: Long,
-        url: String,
-    ): PostImage {
-        val post = postRepository.find(postId)
-        return PostImage(
-            post = post,
-            url = url
-        )
     }
 
 }

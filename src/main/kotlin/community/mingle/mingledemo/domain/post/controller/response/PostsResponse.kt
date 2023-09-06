@@ -18,6 +18,5 @@ data class PostsResponse(
     val viewCount: Int,
     val postLikeCount: Int,
     val postScrapCount: Int,
-    val postImages: List<PostImage>,
     val createdAt: LocalDateTime,
 )
