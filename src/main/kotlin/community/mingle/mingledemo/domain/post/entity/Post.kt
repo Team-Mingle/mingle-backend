@@ -6,6 +6,7 @@ import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
 import community.mingle.mingledemo.enums.ContentStatusType
 import jakarta.persistence.*
+import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
 import java.time.LocalDateTime
@@ -55,11 +56,14 @@ class Post(
     val id: Long? = null
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    @BatchSize(size = 10)
     var postImages = mutableListOf<PostImage>()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    @BatchSize(size = 10)
     var postLikes = mutableListOf<PostLike>()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    @BatchSize(size = 10)
     var postScraps = mutableListOf<PostScrap>()
 }
