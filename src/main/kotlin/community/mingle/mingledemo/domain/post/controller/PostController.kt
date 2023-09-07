@@ -2,6 +2,7 @@ package community.mingle.mingledemo.domain.post.controller
 
 import community.mingle.mingledemo.domain.post.controller.request.CreatePostRequest
 import community.mingle.mingledemo.domain.post.controller.response.CreatePostResponse
+import community.mingle.mingledemo.domain.post.controller.response.GetPostDetailResponse
 import community.mingle.mingledemo.domain.post.controller.response.PostsResponse
 import community.mingle.mingledemo.domain.post.facade.PostFacade
 import community.mingle.mingledemo.enums.BoardType
@@ -11,12 +12,7 @@ import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/post")
@@ -32,7 +28,7 @@ class PostController(
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
         val postDto = with(createPostRequest) {
-             postFacade.create(
+            postFacade.create(
                 memberId = memberId,
                 title = title,
                 content = content,
@@ -44,12 +40,12 @@ class PostController(
 
         return with(postDto) {
             CreatePostResponse(
-                    postId = id!!,
-                    title = title,
-                    content = content,
-                    boardType = boardType,
-                    categoryType = categoryType,
-                    anonymous = anonymous
+                postId = id!!,
+                title = title,
+                content = content,
+                boardType = boardType,
+                categoryType = categoryType,
+                anonymous = anonymous
             )
         }
     }
@@ -65,35 +61,61 @@ class PostController(
     ): List<PostsResponse> {
         val memberId = tokenParser.getMemberId()
 
-        val pagePostDtos = postFacade.pagePosts(
-                memberId = memberId,
-                boardType = boardType,
-                categoryType = categoryType,
-                pageRequest = PageRequest.of(
-                        pageable.pageNumber,
-                        pageable.pageSize,
-                        Sort.Direction.DESC,
-                        "createdAt"
-                )
+        val postPreviewDtos = postFacade.pagePosts(
+            memberId = memberId,
+            boardType = boardType,
+            categoryType = categoryType,
+            pageRequest = PageRequest.of(
+                pageable.pageNumber,
+                pageable.pageSize,
+                Sort.Direction.DESC,
+                "createdAt"
+            )
         )
 
-        return pagePostDtos.map { post ->
+        return postPreviewDtos.map { post ->
             with(post) {
                 PostsResponse(
-                        memberId = post.member.id!!,
-                        title = title,
-                        content = content,
-                        board = this.boardType,
-                        category = this.categoryType,
-                        anonymous = anonymous,
-                        fileAttached = fileAttached,
-                        status = status,
-                        viewCount = viewCount,
-                        postLikeCount = postLikes.size,
-                        postScrapCount = postScraps.size,
-                        createdAt = createdAt
+                    title = title,
+                    content = content,
+                    nickname = nicknameOrAnonymous,
+                    fileAttached = fileAttached,
+                    likeCount = likeCount,
+                    commentCount = commentCount,
+                    createdAt = createdAt
                 )
             }
+        }
+    }
+
+    @GetMapping("/{postId}")
+    fun getPostDetail(
+        @PathVariable
+        postId: Long
+    ): GetPostDetailResponse {
+        val memberId = tokenParser.getMemberId()
+        val postDetailDto = postFacade.getById(
+            memberId = memberId,
+            postId = postId
+        )
+        return with(postDetailDto) {
+            GetPostDetailResponse(
+                id = postId,
+                nickname = nicknameOrAnonymous,
+                title = postDto.title,
+                content = postDto.content,
+                viewCount = postDto.viewCount,
+                fileAttached = postDto.fileAttached,
+                likeCount = postDto.likes.size,
+                scrapCount = postDto.scraps.size,
+                commentCount = postDto.comments.size,
+                isMyPost = isMyPost,
+                isLiked = isLiked,
+                isScraped = isScraped,
+                isReported = isReported,
+                isAdmin = isAdmin,
+                createdAt = postDto.createdAt
+            )
         }
     }
 }

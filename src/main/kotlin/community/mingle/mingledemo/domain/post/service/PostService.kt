@@ -3,7 +3,6 @@ package community.mingle.mingledemo.domain.post.service
 import community.mingle.mingledemo.domain.member.repository.MemberRepository
 import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
 import community.mingle.mingledemo.domain.post.entity.Post
-import community.mingle.mingledemo.domain.post.entity.PostImage
 import community.mingle.mingledemo.domain.post.repository.PostRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository.Companion.find
 import community.mingle.mingledemo.enums.BoardType
@@ -62,5 +61,9 @@ class PostService(
         )
         return posts.content
     }
+
+    fun getById(
+        postId: Long
+    ) = postRepository.find(postId)
 
 }
