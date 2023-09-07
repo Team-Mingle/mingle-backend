@@ -1,9 +1,12 @@
 package community.mingle.mingledemo.domain.post.facade
 
+import community.mingle.mingledemo.domain.post.PostDtoUtil.toDto
+import community.mingle.mingledemo.domain.post.PostDtoUtil.toDtos
 import community.mingle.mingledemo.domain.post.controller.response.CreatePostResponse
 import community.mingle.mingledemo.domain.post.controller.response.PostsResponse
 import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.domain.post.service.PostService
+import community.mingle.mingledemo.dto.post.PostDto
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
 import org.springframework.data.domain.PageRequest
@@ -20,21 +23,25 @@ class PostFacade(
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
-    ): Post = postService.create(
-            memberId = memberId,
-            title = title,
-            content = content,
-            boardType = boardType,
-            categoryType = categoryType,
-            anonymous = anonymous,
+    ): PostDto {
+        val post = postService.create(
+                memberId = memberId,
+                title = title,
+                content = content,
+                boardType = boardType,
+                categoryType = categoryType,
+                anonymous = anonymous,
         )
+
+        return post.toDto()
+    }
 
     fun pagePosts(
         memberId: Long,
         boardType: BoardType,
         categoryType: CategoryType,
         pageRequest: PageRequest
-    ): MutableList<Post> =
+    ): List<PostDto> =
         if (boardType == BoardType.TOTAL) {
             postService.getTotalPostsByCategory(
                 categoryType = categoryType,
@@ -46,6 +53,6 @@ class PostFacade(
                 categoryType = categoryType,
                 pageRequest = pageRequest
             )
-        }
+        }.toDtos()
 
 }

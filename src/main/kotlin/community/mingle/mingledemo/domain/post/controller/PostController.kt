@@ -31,7 +31,7 @@ class PostController(
         createPostRequest: CreatePostRequest,
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
-        val post = with(createPostRequest) {
+        val postDto = with(createPostRequest) {
              postFacade.create(
                 memberId = memberId,
                 title = title,
@@ -42,7 +42,7 @@ class PostController(
             )
         }
 
-        return with(post) {
+        return with(postDto) {
             CreatePostResponse(
                     postId = id!!,
                     title = title,
@@ -65,7 +65,7 @@ class PostController(
     ): List<PostsResponse> {
         val memberId = tokenParser.getMemberId()
 
-        val pagePosts = postFacade.pagePosts(
+        val pagePostDtos = postFacade.pagePosts(
                 memberId = memberId,
                 boardType = boardType,
                 categoryType = categoryType,
@@ -77,7 +77,7 @@ class PostController(
                 )
         )
 
-        return pagePosts.map { post ->
+        return pagePostDtos.map { post ->
             with(post) {
                 PostsResponse(
                         memberId = post.member.id!!,

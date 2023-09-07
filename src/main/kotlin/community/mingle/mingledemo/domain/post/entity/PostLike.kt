@@ -13,6 +13,8 @@ open class PostLike(
     @JoinColumn(name = "post_id", nullable = false)
     var post: Post,
 
+
+
     ) : ContentLike(
     member = member,
 )
