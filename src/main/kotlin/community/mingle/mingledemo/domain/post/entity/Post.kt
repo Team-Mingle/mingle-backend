@@ -1,6 +1,7 @@
 package community.mingle.mingledemo.domain.post.entity
 
 import community.mingle.mingledemo.domain.member.entity.Member
+import community.mingle.mingledemo.domain.report.entity.PostReport
 import community.mingle.mingledemo.entitybase.AuditLoggingBase
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
@@ -61,9 +62,17 @@ class Post(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     @BatchSize(size = 10)
-    var postLikes = mutableListOf<PostLike>()
+    var likes = mutableListOf<PostLike>()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     @BatchSize(size = 10)
-    var postScraps = mutableListOf<PostScrap>()
+    var scraps = mutableListOf<PostScrap>()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    @BatchSize(size = 10)
+    var comments = mutableListOf<Comment>()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+    @BatchSize(size = 10)
+    var reports = mutableListOf<PostReport>()
 }

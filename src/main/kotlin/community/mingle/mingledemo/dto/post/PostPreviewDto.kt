@@ -1,11 +1,11 @@
-package community.mingle.mingledemo.domain.post.controller.response
+package community.mingle.mingledemo.dto.post
 
 import java.time.LocalDateTime
 
-data class PostsResponse(
+data class PostPreviewDto(
     val title: String,
     val content: String,
-    val nickname: String,
+    val nicknameOrAnonymous: String,
     val likeCount: Int,
     val commentCount: Int,
     val createdAt: LocalDateTime,

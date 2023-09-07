@@ -1,6 +1,7 @@
 package community.mingle.mingledemo.domain.member.util
 
 import community.mingle.mingledemo.domain.member.entity.Member
+import community.mingle.mingledemo.domain.member.util.UniversityDtoUtil.toDto
 import community.mingle.mingledemo.dto.member.MemberDto
 
 object MemberDtoUtil {
@@ -8,7 +9,7 @@ object MemberDtoUtil {
     fun Member.toDto(): MemberDto =
         MemberDto(
             id = id,
-            university = university,
+            universityDto = university.toDto(),
             nickname = nickname,
             email = email,
             password = password,

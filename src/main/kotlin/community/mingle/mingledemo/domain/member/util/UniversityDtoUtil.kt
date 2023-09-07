@@ -1,6 +1,7 @@
 package community.mingle.mingledemo.domain.member.util
 
 import community.mingle.mingledemo.domain.member.entity.University
+import community.mingle.mingledemo.domain.member.util.CountryDtoUtil.toDto
 import community.mingle.mingledemo.dto.member.UniversityDto
 
 object UniversityDtoUtil {
@@ -10,7 +11,7 @@ object UniversityDtoUtil {
             id = id,
             emailDomain = emailDomain,
             name = name,
-            country = country,
+            countryDto = country.toDto(),
             members = members,
         )
 
