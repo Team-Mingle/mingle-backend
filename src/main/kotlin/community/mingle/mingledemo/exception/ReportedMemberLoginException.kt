@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class ReportedMemberLoginException : ResponseStatusReasonException(
     statusCode = HttpStatus.FORBIDDEN,
-    reasonName = "REPORTED_MEMBER_NOT_ALLOWED",
+    code = 3002,
     reasonMessage = "신고된 유저는 로그인 할 수 없습니다.",
 )

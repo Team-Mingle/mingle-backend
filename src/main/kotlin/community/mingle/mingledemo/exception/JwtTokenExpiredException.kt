@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class JwtTokenExpiredException: ResponseStatusReasonException(
     statusCode = HttpStatus.UNAUTHORIZED,
-    reasonName = "TOKEN_EXPIRED",
+    code = 1006,
     reasonMessage = "토큰이 만료되었습니다",
 )

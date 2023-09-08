@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class AuthenticateFailedException: ResponseStatusReasonException(
     statusCode = HttpStatus.UNAUTHORIZED,
-    reasonName = "AUTHENTICATION_FAILED",
+    code = 1001,
     reasonMessage = "잘못된 인증 정보입니다.",
 )

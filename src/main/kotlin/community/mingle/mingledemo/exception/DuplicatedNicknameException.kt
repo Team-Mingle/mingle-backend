@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class DuplicatedNicknameException: ResponseStatusReasonException(
     statusCode = HttpStatus.BAD_REQUEST,
-    reasonName = "DUPLICATED_NICKNAME",
+    code = 1004,
     reasonMessage = "이미 사용 중인 닉네임입니다.",
 )

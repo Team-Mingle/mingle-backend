@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class InvalidPostAccess : ResponseStatusReasonException(
     statusCode = HttpStatus.UNAUTHORIZED,
-    reasonName = "INVALID_POST_READ_ACCESS",
+    code = 2001,
     reasonMessage = "접근 권한이 없는 게시글 입니다.",
 )

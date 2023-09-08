@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class ReportedMemberSignUpException : ResponseStatusReasonException(
     statusCode = HttpStatus.FORBIDDEN,
-    reasonName = "REPORTED_MEMBER_NOT_ALLOWED",
+    code = 3003,
     reasonMessage = "신고된 유저는 재가입 할 수 없습니다.",
 )

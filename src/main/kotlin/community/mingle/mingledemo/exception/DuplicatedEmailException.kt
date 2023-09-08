@@ -5,6 +5,6 @@ import org.springframework.http.HttpStatus
 
 class DuplicatedEmailException : ResponseStatusReasonException(
     statusCode = HttpStatus.BAD_REQUEST,
-    reasonName = "DUPLICATED_EMAIL",
+    code = 1003,
     reasonMessage = "이미 가입된 이메일입니다.",
 )
