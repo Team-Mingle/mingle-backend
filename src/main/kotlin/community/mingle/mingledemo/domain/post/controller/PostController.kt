@@ -12,7 +12,9 @@ import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.http.MediaType
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 @RestController
 @RequestMapping("/post")
@@ -21,10 +23,12 @@ class PostController(
     private val postFacade: PostFacade,
 ) {
 
-    @PostMapping
+    @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPost(
         @RequestBody
         createPostRequest: CreatePostRequest,
+        @RequestPart
+        images: List<MultipartFile>
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
         val postDto = with(createPostRequest) {
@@ -35,6 +39,7 @@ class PostController(
                 boardType = boardType,
                 categoryType = categoryType,
                 anonymous = anonymous,
+                images = images
             )
         }
 
@@ -114,7 +119,8 @@ class PostController(
                 isScraped = isScraped,
                 isReported = isReported,
                 isAdmin = isAdmin,
-                createdAt = postDto.createdAt
+                createdAt = postDto.createdAt,
+                imagesUrl = postDto.images.map { it.url }
             )
         }
     }

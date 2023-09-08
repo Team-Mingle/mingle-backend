@@ -10,4 +10,4 @@ data class CreatePostRequest(
     val boardType: BoardType,
     val categoryType: CategoryType,
     val anonymous: Boolean,
-    ): Serializable
+) : Serializable

@@ -14,12 +14,15 @@ import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.exception.InvalidPostAccess
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class PostFacade(
     private val postService: PostService,
     private val memberService: MemberService,
 ) {
+    @Transactional
     fun create(
         memberId: Long,
         title: String,
@@ -27,6 +30,7 @@ class PostFacade(
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
+        images: List<MultipartFile>
     ): PostDto {
         val post = postService.create(
             memberId = memberId,
@@ -35,6 +39,7 @@ class PostFacade(
             boardType = boardType,
             categoryType = categoryType,
             anonymous = anonymous,
+            images = images
         )
 
         return post.toDto()
