@@ -1,9 +1,11 @@
 package community.mingle.mingledemo.domain.post.controller
 
 import community.mingle.mingledemo.domain.post.controller.request.CreatePostRequest
+import community.mingle.mingledemo.domain.post.controller.request.UpdatePostRequest
 import community.mingle.mingledemo.domain.post.controller.response.CreatePostResponse
 import community.mingle.mingledemo.domain.post.controller.response.GetPostDetailResponse
 import community.mingle.mingledemo.domain.post.controller.response.PostsResponse
+import community.mingle.mingledemo.domain.post.controller.response.UpdatePostResponse
 import community.mingle.mingledemo.domain.post.facade.PostFacade
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
@@ -128,6 +130,45 @@ class PostController(
                 isAdmin = isAdmin,
                 createdAt = postDto.createdAt,
                 imagesUrl = postDto.images.map { it.url }
+            )
+        }
+    }
+
+    @Operation(
+            summary = "게시물 수정"
+    )
+    @PatchMapping(
+            "/{postId}",
+            consumes = [MediaType.MULTIPART_FORM_DATA_VALUE]
+    )
+    fun updatePost(
+            @PathVariable
+            postId: Long,
+            @ModelAttribute
+            updatePostRequest: UpdatePostRequest,
+    ): UpdatePostResponse {
+        val memberId = tokenParser.getMemberId()
+
+        val postDto = with(updatePostRequest) {
+            postFacade.update(
+                memberId = memberId,
+                postId = postId,
+                title = title,
+                content = content,
+                anonymous = anonymous,
+                imageIdsToDelete = imageIdsToDelete,
+                imagesToAdd = imagesToAdd
+            )
+        }
+
+        return with(postDto) {
+            UpdatePostResponse(
+                postId = id!!,
+                title = title,
+                content = content,
+                boardType = boardType,
+                categoryType = categoryType,
+                anonymous = anonymous
             )
         }
     }

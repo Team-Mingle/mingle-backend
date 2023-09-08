@@ -3,7 +3,6 @@ package community.mingle.mingledemo.domain.post.service
 import community.mingle.mingledemo.domain.member.repository.MemberRepository
 import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
 import community.mingle.mingledemo.domain.post.entity.Post
-import community.mingle.mingledemo.domain.post.entity.PostImage
 import community.mingle.mingledemo.domain.post.repository.PostImageRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository.Companion.find
@@ -33,7 +32,9 @@ class PostService(
     ): Post {
         val member = memberRepository.find(memberId)
 
-        val post = Post(
+
+
+        return Post(
             member = member,
             title = title,
             content = content,
@@ -42,13 +43,6 @@ class PostService(
             anonymous = anonymous,
             fileAttached = images.isNotEmpty(),
         ).run { postRepository.save(this) }
-
-        PostImage(
-            post = post,
-            url = "ToBeDeveloped"
-        ).run { postImageRepository.save(this) }
-
-        return post
     }
 
     fun getUnivPostsByCategory(
@@ -79,5 +73,20 @@ class PostService(
     fun getById(
         postId: Long
     ) = postRepository.find(postId)
+
+    @Transactional
+    fun update(
+            postId: Long,
+            title: String,
+            content: String,
+            anonymous: Boolean,
+    ): Post {
+        val post = postRepository.find(postId)
+        return post.apply {
+            this.title = title
+            this.content = content
+            this.anonymous = anonymous
+        }
+    }
 
 }

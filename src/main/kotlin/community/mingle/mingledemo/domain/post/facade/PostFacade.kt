@@ -4,6 +4,7 @@ import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.member.service.MemberService
 import community.mingle.mingledemo.domain.post.PostDtoUtil.toDto
 import community.mingle.mingledemo.domain.post.entity.Post
+import community.mingle.mingledemo.domain.post.service.PostImageService
 import community.mingle.mingledemo.domain.post.service.PostService
 import community.mingle.mingledemo.dto.post.PostDetailDto
 import community.mingle.mingledemo.dto.post.PostDto
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class PostFacade(
     private val postService: PostService,
+    private val postImageService: PostImageService,
     private val memberService: MemberService,
 ) {
     @Transactional
@@ -41,7 +43,10 @@ class PostFacade(
             anonymous = anonymous,
             images = images
         )
-
+        postImageService.create(
+            post = post,
+            images = images
+        )
         return post.toDto()
     }
 
@@ -63,7 +68,7 @@ class PostFacade(
                 pageRequest = pageRequest
             )
         }.map { post ->
-            val nicknameOrAnonymous = nicknameOrAnonymous(post)
+            val nicknameOrAnonymous = nicknameOrAnonymous(post.id!!)
             PostPreviewDto(
                 title = post.title,
                 content = post.content,
@@ -81,27 +86,29 @@ class PostFacade(
     ): PostDetailDto {
         val member = memberService.getById(memberId)
         val post = postService.getById(postId)
-        if (!hasReadAccess(member = member, post = post))
-            throw InvalidPostAccess()
+        if (!hasAccessRight(
+                memberId = memberId,
+                postId = postId
+            )) throw InvalidPostAccess()
 
         val nicknameOrAnonymous = nicknameOrAnonymous(
-            post = post
+            postId = postId
         )
         val isMyPost = isMyPost(
-            post = post,
-            member = member
+            postId = postId,
+            memberId = memberId,
         )
         val isLiked = isLiked(
-            post = post,
-            member = member
+            postId = postId,
+            memberId = memberId,
         )
         val isScraped = isScraped(
-            post = post,
-            member = member
+            postId = postId,
+            memberId = memberId,
         )
         val isReported = isReport(
-            post = post,
-            member = member,
+            postId = postId,
+            memberId = memberId,
         )
         val isAdmin = isAdmin(post)
 
@@ -116,40 +123,88 @@ class PostFacade(
         )
     }
 
-    private fun hasReadAccess(
-        member: Member,
-        post: Post
+    fun update(
+        memberId: Long,
+        postId: Long,
+        title: String,
+        content: String,
+        anonymous: Boolean,
+        imageIdsToDelete: List<Long>,
+        imagesToAdd: List<MultipartFile>
+    ): PostDto {
+        if (!hasAccessRight(
+                        memberId = memberId,
+                        postId = postId
+        )) throw InvalidPostAccess()
+        val post = postService.update(
+            postId = postId,
+            title = title,
+            content = content,
+            anonymous = anonymous
+        )
+        postImageService.update(
+            post = post,
+            imageIdsToDelete = imageIdsToDelete,
+            imagesToAdd = imagesToAdd
+        )
+        return post.toDto()
+
+    }
+
+    private fun hasAccessRight(
+        memberId: Long,
+        postId: Long
     ): Boolean {
+        val member = memberService.getById(memberId)
+        val post = postService.getById(postId)
+
         return if (post.boardType == BoardType.TOTAL) {
             member.university.country == post.member.university.country
         } else member.university == post.member.university
     }
 
     private fun nicknameOrAnonymous(
-        post: Post
+        postId: Long
     ): String {
+        val post = postService.getById(postId)
+
         return if (post.anonymous) {
             ANONYMOUS_NICKNAME
         } else post.member.nickname
     }
 
     private fun isMyPost(
-        post: Post,
-        member: Member
-    ) = post.member == member
+        memberId: Long,
+        postId: Long
+    ): Boolean {
+        val member = memberService.getById(memberId)
+        val post = postService.getById(postId)
+
+        return post.member == member
+    }
 
     private fun isLiked(
-        post: Post,
-        member: Member
-    ) = post.likes.any { postLike ->
-        postLike.member == member
+        memberId: Long,
+        postId: Long
+    ): Boolean {
+        val member = memberService.getById(memberId)
+        val post = postService.getById(postId)
+
+        return post.likes.any { postLike ->
+            postLike.member == member
+        }
     }
 
     private fun isScraped(
-        post: Post,
-        member: Member
-    ) = post.scraps.any { postScrap ->
-        postScrap.member == member
+        memberId: Long,
+        postId: Long
+    ): Boolean {
+        val member = memberService.getById(memberId)
+        val post = postService.getById(postId)
+
+        return post.scraps.any { postScrap ->
+            postScrap.member == member
+        }
     }
 
     private fun isAdmin(
@@ -157,10 +212,15 @@ class PostFacade(
     ) = post.member.role == MemberRole.ADMIN
 
     private fun isReport(
-        post: Post,
-        member: Member
-    ) = post.reports.any { postReport ->
-        postReport.reporterMember == member
+        memberId: Long,
+        postId: Long
+    ): Boolean {
+        val member = memberService.getById(memberId)
+        val post = postService.getById(postId)
+
+        return post.reports.any { postReport ->
+            postReport.reporterMember == member
+        }
     }
 
     companion object {
