@@ -25,10 +25,10 @@ class PostController(
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPost(
-        @RequestBody
+        @ModelAttribute
         createPostRequest: CreatePostRequest,
-        @RequestPart
-        images: List<MultipartFile>
+//        @RequestPart
+//        images: List<MultipartFile>
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
         val postDto = with(createPostRequest) {
