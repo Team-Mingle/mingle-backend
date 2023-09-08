@@ -26,8 +26,6 @@ class PostController(
     fun createPost(
         @ModelAttribute
         createPostRequest: CreatePostRequest,
-//        @RequestPart
-//        images: List<MultipartFile>
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
         val postDto = with(createPostRequest) {
