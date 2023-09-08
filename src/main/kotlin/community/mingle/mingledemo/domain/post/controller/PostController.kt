@@ -8,6 +8,7 @@ import community.mingle.mingledemo.domain.post.facade.PostFacade
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
 import community.mingle.mingledemo.security.component.TokenParser
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -22,6 +23,9 @@ class PostController(
     private val postFacade: PostFacade,
 ) {
 
+    @Operation(
+            summary = "게시물 생성",
+    )
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPost(
         @ModelAttribute
@@ -52,6 +56,9 @@ class PostController(
         }
     }
 
+    @Operation(
+            summary = "게시물 리스트 조회"
+    )
     @GetMapping
     fun pagePosts(
         @RequestParam
@@ -90,6 +97,9 @@ class PostController(
         }
     }
 
+    @Operation(
+            summary = "게시물 상세 조회"
+    )
     @GetMapping("/{postId}")
     fun getPostDetail(
         @PathVariable
