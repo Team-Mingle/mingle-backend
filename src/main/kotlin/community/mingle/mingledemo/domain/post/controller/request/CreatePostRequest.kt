@@ -2,6 +2,7 @@ package community.mingle.mingledemo.domain.post.controller.request
 
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
+import org.springframework.web.multipart.MultipartFile
 import java.io.Serializable
 
 data class CreatePostRequest(
@@ -10,4 +11,5 @@ data class CreatePostRequest(
     val boardType: BoardType,
     val categoryType: CategoryType,
     val anonymous: Boolean,
-    ): Serializable
+    val images: List<MultipartFile>
+) : Serializable

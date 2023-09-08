@@ -1,6 +1,7 @@
 package community.mingle.mingledemo.dto.post
 
 import community.mingle.mingledemo.domain.post.entity.Comment
+import community.mingle.mingledemo.domain.post.entity.PostImage
 import community.mingle.mingledemo.domain.post.entity.PostLike
 import community.mingle.mingledemo.domain.post.entity.PostScrap
 import community.mingle.mingledemo.domain.report.entity.PostReport
@@ -21,6 +22,7 @@ data class PostDto(
     val fileAttached: Boolean,
     val status: ContentStatusType,
     val viewCount: Int,
+    val images: List<PostImage>,
     val likes: List<PostLike>,
     val scraps: List<PostScrap>,
     val comments: List<Comment>,

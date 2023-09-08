@@ -3,19 +3,25 @@ package community.mingle.mingledemo.domain.post.service
 import community.mingle.mingledemo.domain.member.repository.MemberRepository
 import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
 import community.mingle.mingledemo.domain.post.entity.Post
+import community.mingle.mingledemo.domain.post.entity.PostImage
+import community.mingle.mingledemo.domain.post.repository.PostImageRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository.Companion.find
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import org.springframework.web.multipart.MultipartFile
 
 @Service
 class PostService(
     private val postRepository: PostRepository,
+    private val postImageRepository: PostImageRepository,
     private val memberRepository: MemberRepository,
 ) {
 
+    @Transactional
     fun create(
         memberId: Long,
         title: String,
@@ -23,18 +29,26 @@ class PostService(
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
+        images: List<MultipartFile>
     ): Post {
         val member = memberRepository.find(memberId)
 
-        return Post(
+        val post = Post(
             member = member,
             title = title,
             content = content,
             boardType = boardType,
             categoryType = categoryType,
             anonymous = anonymous,
-            fileAttached = false,
+            fileAttached = images.isNotEmpty(),
         ).run { postRepository.save(this) }
+
+        PostImage(
+            post = post,
+            url = "ToBeDeveloped"
+        ).run { postImageRepository.save(this) }
+
+        return post
     }
 
     fun getUnivPostsByCategory(

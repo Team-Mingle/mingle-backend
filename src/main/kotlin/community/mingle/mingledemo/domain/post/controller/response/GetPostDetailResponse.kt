@@ -18,4 +18,5 @@ data class GetPostDetailResponse(
     val fileAttached: Boolean,
     val viewCount: Int,
     val createdAt: LocalDateTime,
+    val imagesUrl: List<String>,
 )

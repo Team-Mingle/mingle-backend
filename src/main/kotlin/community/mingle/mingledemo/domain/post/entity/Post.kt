@@ -58,7 +58,7 @@ class Post(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     @BatchSize(size = 10)
-    var postImages = mutableListOf<PostImage>()
+    var images = mutableListOf<PostImage>()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
     @BatchSize(size = 10)

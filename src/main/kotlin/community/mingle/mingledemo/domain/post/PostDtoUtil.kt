@@ -17,6 +17,7 @@ object PostDtoUtil {
         fileAttached = fileAttached,
         status = status,
         viewCount = viewCount,
+        images = images,
         likes = likes,
         scraps = scraps,
         comments = comments,
