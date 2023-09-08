@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - changeSet:
+      id: drop notnull constraint to post_image deleted_at column
+      author: Hyeonwoo Jung
+      changes:
+        - dropNotNullConstraint:
+            tableName: post_image
+            columnName: deleted_at
+            columnDataType: timestamp
