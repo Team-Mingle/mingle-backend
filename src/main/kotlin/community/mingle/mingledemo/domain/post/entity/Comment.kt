@@ -5,7 +5,7 @@ import community.mingle.mingledemo.entitybase.AuditLoggingBase
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
 import org.hibernate.annotations.Where
-import java.time.Instant
+import java.time.LocalDateTime
 
 @Entity
 @Where(clause = "deleted_at IS NULL")
@@ -21,10 +21,10 @@ class Comment(
     var member: Member,
 
     @Column(name = "parent_comment_id")
-    var parentCommentId: Long,
+    var parentCommentId: Long?,
 
     @Column(name = "mention_id")
-    var mentionId: Long,
+    var mentionId: Long?,
 
     @Column(name = "content", nullable = false)
     var content: String,
@@ -33,7 +33,7 @@ class Comment(
     var anonymous: Boolean,
 
     @Column(name = "deleted_at")
-    var deletedAt: Instant,
+    var deletedAt: LocalDateTime,
 ) : AuditLoggingBase() {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
