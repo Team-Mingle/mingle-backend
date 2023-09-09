@@ -5,11 +5,9 @@ import community.mingle.mingledemo.entitybase.AuditLoggingBase
 import community.mingle.mingledemo.enums.ContentStatusType
 import jakarta.persistence.*
 import org.hibernate.annotations.SQLDelete
-import org.hibernate.annotations.Where
 import java.time.LocalDateTime
 
 @Entity
-@Where(clause = "deleted_at IS NULL")
 @SQLDelete(sql = "UPDATE comment SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(name = "comment")
 class Comment(

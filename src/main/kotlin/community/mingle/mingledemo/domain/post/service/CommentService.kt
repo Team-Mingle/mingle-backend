@@ -37,4 +37,35 @@ class CommentService(
             anonymous = anonymous
         ).run { commentRepository.save(this) }
     }
+
+    fun mapCommentsByPostId(
+        postId: Long
+    ): Map<Comment, List<Comment>> {
+        val comments = commentRepository.findAllByPostId(postId)
+
+        return mapCommentToCoComment(comments)
+
+    }
+
+    private fun mapCommentToCoComment(
+        allComments: List<Comment>
+    ): Map<Comment, List<Comment>> {
+        val (comments, coComments) = allComments.partition {
+            it.parentCommentId == null
+        }
+
+        val commentMap = comments
+            .asSequence()
+            .map { comment ->
+                comment to coComments
+                    .asSequence()
+                    .filter {
+                        it.parentCommentId == comment.id
+                    }
+                    .toList()
+            }
+            .toMap()
+
+        return commentMap
+    }
 }

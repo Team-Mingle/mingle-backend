@@ -30,4 +30,6 @@ data class PostDto(
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
     val deletedAt: LocalDateTime?,
-)
+    val nicknameOrAnonymous: String,
+
+    )

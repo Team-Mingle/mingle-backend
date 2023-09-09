@@ -1,12 +1,12 @@
 package community.mingle.mingledemo.domain.post.facade
 
 import community.mingle.mingledemo.domain.member.service.MemberService
-import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.domain.post.service.PostImageService
 import community.mingle.mingledemo.domain.post.service.PostService
 import community.mingle.mingledemo.dto.post.PostDetailDto
 import community.mingle.mingledemo.dto.post.PostDto
 import community.mingle.mingledemo.dto.post.PostPreviewDto
+import community.mingle.mingledemo.dto.post.util.CommonUtil.nicknameOrAnonymous
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDto
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
@@ -71,12 +71,14 @@ class PostFacade(
                 pageRequest = pageRequest
             )
         }.map { post ->
-            val nicknameOrAnonymous = nicknameOrAnonymous(post.id!!)
             PostPreviewDto(
-                postId = post.id,
+                postId = post.id!!,
                 title = post.title,
                 content = post.content,
-                nicknameOrAnonymous = nicknameOrAnonymous,
+                nicknameOrAnonymous = nicknameOrAnonymous(
+                    nickname = post.member.nickname,
+                    anonymous = post.anonymous
+                ),
                 likeCount = post.likes.size,
                 commentCount = post.scraps.size,
                 createdAt = post.createdAt,
@@ -94,9 +96,6 @@ class PostFacade(
             )
         ) throw InvalidPostAccess()
 
-        val nicknameOrAnonymous = nicknameOrAnonymous(
-            postId = postId
-        )
         val isMyPost = isMyPost(
             postId = postId,
             memberId = memberId,
@@ -117,10 +116,9 @@ class PostFacade(
 
         val post = postService.getById(postId)
         postService.updateViewCount(postId)
-        
+
         return PostDetailDto(
             postDto = post.toDto(),
-            nicknameOrAnonymous = nicknameOrAnonymous,
             isMyPost = isMyPost,
             isLiked = isLiked,
             isScraped = isScraped,
@@ -176,16 +174,6 @@ class PostFacade(
         return if (post.boardType == BoardType.TOTAL) {
             member.university.country == post.member.university.country
         } else member.university == post.member.university
-    }
-
-    private fun nicknameOrAnonymous(
-        postId: Long
-    ): String {
-        val post = postService.getById(postId)
-
-        return if (post.anonymous) {
-            ANONYMOUS_NICKNAME
-        } else post.member.nickname
     }
 
     private fun isMyPost(
