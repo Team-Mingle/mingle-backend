@@ -164,7 +164,7 @@ class PostFacade(
         postImageService.delete(postId)
     }
 
-    private fun hasAccessRight(
+    fun hasAccessRight(
         memberId: Long,
         postId: Long
     ): Boolean {
