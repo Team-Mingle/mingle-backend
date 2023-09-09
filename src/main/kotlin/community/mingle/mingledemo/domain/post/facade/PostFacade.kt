@@ -1,6 +1,5 @@
 package community.mingle.mingledemo.domain.post.facade
 
-import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.member.service.MemberService
 import community.mingle.mingledemo.domain.post.PostDtoUtil.toDto
 import community.mingle.mingledemo.domain.post.entity.Post
@@ -32,8 +31,9 @@ class PostFacade(
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
-        images: List<MultipartFile>
+        images: List<MultipartFile>?
     ): PostDto {
+        val fileAttached = !images.isNullOrEmpty()
         val post = postService.create(
             memberId = memberId,
             title = title,
@@ -41,12 +41,15 @@ class PostFacade(
             boardType = boardType,
             categoryType = categoryType,
             anonymous = anonymous,
-            images = images
+            fileAttached = fileAttached
         )
-        postImageService.create(
-            post = post,
-            images = images
-        )
+
+        if (fileAttached) {
+            postImageService.create(
+                post = post,
+                images = images!!
+            )
+        }
         return post.toDto()
     }
 
@@ -70,6 +73,7 @@ class PostFacade(
         }.map { post ->
             val nicknameOrAnonymous = nicknameOrAnonymous(post.id!!)
             PostPreviewDto(
+                postId = post.id,
                 title = post.title,
                 content = post.content,
                 nicknameOrAnonymous = nicknameOrAnonymous,
@@ -84,12 +88,12 @@ class PostFacade(
         memberId: Long,
         postId: Long
     ): PostDetailDto {
-        val member = memberService.getById(memberId)
         val post = postService.getById(postId)
         if (!hasAccessRight(
                 memberId = memberId,
                 postId = postId
-            )) throw InvalidPostAccess()
+            )
+        ) throw InvalidPostAccess()
 
         val nicknameOrAnonymous = nicknameOrAnonymous(
             postId = postId
@@ -123,19 +127,21 @@ class PostFacade(
         )
     }
 
+    @Transactional
     fun update(
         memberId: Long,
         postId: Long,
         title: String,
         content: String,
         anonymous: Boolean,
-        imageIdsToDelete: List<Long>,
-        imagesToAdd: List<MultipartFile>
+        imageIdsToDelete: List<Long>?,
+        imagesToAdd: List<MultipartFile>?
     ): PostDto {
         if (!hasAccessRight(
-                        memberId = memberId,
-                        postId = postId
-        )) throw InvalidPostAccess()
+                memberId = memberId,
+                postId = postId
+            )
+        ) throw InvalidPostAccess()
         val post = postService.update(
             postId = postId,
             title = title,
@@ -148,7 +154,14 @@ class PostFacade(
             imagesToAdd = imagesToAdd
         )
         return post.toDto()
+    }
 
+    @Transactional
+    fun delete(
+        postId: Long
+    ) {
+        postService.delete(postId)
+        postImageService.delete(postId)
     }
 
     private fun hasAccessRight(

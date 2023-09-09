@@ -26,7 +26,7 @@ class PostController(
 ) {
 
     @Operation(
-            summary = "게시물 생성",
+        summary = "게시물 생성",
     )
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPost(
@@ -59,7 +59,7 @@ class PostController(
     }
 
     @Operation(
-            summary = "게시물 리스트 조회"
+        summary = "게시물 리스트 조회"
     )
     @GetMapping
     fun pagePosts(
@@ -87,6 +87,7 @@ class PostController(
         return postPreviewDtos.map { post ->
             with(post) {
                 PostsResponse(
+                    postId = postId,
                     title = title,
                     content = content,
                     nickname = nicknameOrAnonymous,
@@ -100,7 +101,7 @@ class PostController(
     }
 
     @Operation(
-            summary = "게시물 상세 조회"
+        summary = "게시물 상세 조회"
     )
     @GetMapping("/{postId}")
     fun getPostDetail(
@@ -135,17 +136,17 @@ class PostController(
     }
 
     @Operation(
-            summary = "게시물 수정"
+        summary = "게시물 수정"
     )
     @PatchMapping(
-            "/{postId}",
-            consumes = [MediaType.MULTIPART_FORM_DATA_VALUE]
+        "/{postId}",
+        consumes = [MediaType.MULTIPART_FORM_DATA_VALUE]
     )
     fun updatePost(
-            @PathVariable
-            postId: Long,
-            @ModelAttribute
-            updatePostRequest: UpdatePostRequest,
+        @PathVariable
+        postId: Long,
+        @ModelAttribute
+        updatePostRequest: UpdatePostRequest,
     ): UpdatePostResponse {
         val memberId = tokenParser.getMemberId()
 
@@ -172,4 +173,14 @@ class PostController(
             )
         }
     }
+
+    @Operation(
+        summary = "게시물 삭제"
+    )
+    @DeleteMapping("/{postId}")
+    fun deletePost(
+        @PathVariable
+        postId: Long
+    ) = postFacade.delete(postId)
+
 }
