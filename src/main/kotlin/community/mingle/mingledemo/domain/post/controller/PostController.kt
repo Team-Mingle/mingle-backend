@@ -4,7 +4,7 @@ import community.mingle.mingledemo.domain.post.controller.request.CreatePostRequ
 import community.mingle.mingledemo.domain.post.controller.request.UpdatePostRequest
 import community.mingle.mingledemo.domain.post.controller.response.CreatePostResponse
 import community.mingle.mingledemo.domain.post.controller.response.GetPostDetailResponse
-import community.mingle.mingledemo.domain.post.controller.response.PostsResponse
+import community.mingle.mingledemo.domain.post.controller.response.GetPostPreviewResponse
 import community.mingle.mingledemo.domain.post.controller.response.UpdatePostResponse
 import community.mingle.mingledemo.domain.post.facade.PostFacade
 import community.mingle.mingledemo.enums.BoardType
@@ -69,7 +69,7 @@ class PostController(
         categoryType: CategoryType,
         @Parameter
         pageable: Pageable
-    ): List<PostsResponse> {
+    ): List<GetPostPreviewResponse> {
         val memberId = tokenParser.getMemberId()
 
         val postPreviewDtos = postFacade.pagePosts(
@@ -86,7 +86,7 @@ class PostController(
 
         return postPreviewDtos.map { post ->
             with(post) {
-                PostsResponse(
+                GetPostPreviewResponse(
                     postId = postId,
                     title = title,
                     content = content,

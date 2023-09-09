@@ -2,7 +2,7 @@ package community.mingle.mingledemo.domain.post.controller.response
 
 import java.time.LocalDateTime
 
-data class PostsResponse(
+data class GetPostPreviewResponse(
     val postId: Long,
     val title: String,
     val content: String,
