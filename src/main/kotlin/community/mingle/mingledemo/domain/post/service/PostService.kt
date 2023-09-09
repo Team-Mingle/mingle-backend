@@ -91,4 +91,14 @@ class PostService(
         postId: Long
     ) = postRepository.deleteById(postId)
 
+    @Transactional
+    fun updateViewCount(
+        postId: Long
+    ): Post {
+        val post = postRepository.find(postId)
+        return post.apply {
+            this.viewCount++
+        }
+    }
+
 }
