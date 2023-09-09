@@ -1,8 +1,8 @@
 package community.mingle.mingledemo.domain.member.service
 
 import community.mingle.mingledemo.domain.member.repository.CountryRepository
-import community.mingle.mingledemo.domain.member.util.CountryDtoUtil.toDtos
 import community.mingle.mingledemo.dto.member.CountryDto
+import community.mingle.mingledemo.dto.member.util.CountryDtoUtil.toDtos
 import org.springframework.stereotype.Service
 
 @Service

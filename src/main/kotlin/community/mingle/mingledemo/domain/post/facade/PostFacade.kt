@@ -1,13 +1,13 @@
 package community.mingle.mingledemo.domain.post.facade
 
 import community.mingle.mingledemo.domain.member.service.MemberService
-import community.mingle.mingledemo.domain.post.PostDtoUtil.toDto
 import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.domain.post.service.PostImageService
 import community.mingle.mingledemo.domain.post.service.PostService
 import community.mingle.mingledemo.dto.post.PostDetailDto
 import community.mingle.mingledemo.dto.post.PostDto
 import community.mingle.mingledemo.dto.post.PostPreviewDto
+import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDto
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
 import community.mingle.mingledemo.enums.MemberRole

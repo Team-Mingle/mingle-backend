@@ -12,6 +12,7 @@ import community.mingle.mingledemo.enums.CategoryType
 import community.mingle.mingledemo.security.component.TokenParser
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import jakarta.validation.Valid
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -31,6 +32,7 @@ class PostController(
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun createPost(
         @ModelAttribute
+        @Valid
         createPostRequest: CreatePostRequest,
     ): CreatePostResponse {
         val memberId = tokenParser.getMemberId()
@@ -46,16 +48,9 @@ class PostController(
             )
         }
 
-        return with(postDto) {
-            CreatePostResponse(
-                postId = id!!,
-                title = title,
-                content = content,
-                boardType = boardType,
-                categoryType = categoryType,
-                anonymous = anonymous
-            )
-        }
+        return CreatePostResponse(
+            postId = postDto.id!!,
+        )
     }
 
     @Operation(
