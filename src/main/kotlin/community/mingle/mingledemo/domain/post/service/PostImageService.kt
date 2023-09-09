@@ -29,13 +29,28 @@ class PostImageService(
     @Transactional
     fun update(
         post: Post,
-        imageIdsToDelete: List<Long>,
-        imagesToAdd: List<MultipartFile>
+        imageIdsToDelete: List<Long>?,
+        imagesToAdd: List<MultipartFile>?
     ) {
-        postImageRepository.deleteAllById(imageIdsToDelete)
-        create(
-            post = post,
-            images = imagesToAdd
-        )
+        if (imageIdsToDelete != null) {
+            postImageRepository.deleteAllById(imageIdsToDelete)
+        }
+
+        if (imagesToAdd != null) {
+            create(
+                post = post,
+                images = imagesToAdd
+            )
+        }
     }
+
+    @Transactional
+    fun delete(
+        postId: Long
+    ) {
+        val postImages = postImageRepository.findAllByPostId(postId)
+        postImageRepository.deleteAll(postImages)
+    }
+
+
 }

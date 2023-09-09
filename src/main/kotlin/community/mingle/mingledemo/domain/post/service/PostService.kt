@@ -11,7 +11,6 @@ import community.mingle.mingledemo.enums.CategoryType
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.web.multipart.MultipartFile
 
 @Service
 class PostService(
@@ -28,7 +27,7 @@ class PostService(
         boardType: BoardType,
         categoryType: CategoryType,
         anonymous: Boolean,
-        images: List<MultipartFile>
+        fileAttached: Boolean
     ): Post {
         val member = memberRepository.find(memberId)
 
@@ -41,7 +40,7 @@ class PostService(
             boardType = boardType,
             categoryType = categoryType,
             anonymous = anonymous,
-            fileAttached = images.isNotEmpty(),
+            fileAttached = fileAttached,
         ).run { postRepository.save(this) }
     }
 
@@ -76,10 +75,10 @@ class PostService(
 
     @Transactional
     fun update(
-            postId: Long,
-            title: String,
-            content: String,
-            anonymous: Boolean,
+        postId: Long,
+        title: String,
+        content: String,
+        anonymous: Boolean,
     ): Post {
         val post = postRepository.find(postId)
         return post.apply {
@@ -88,5 +87,10 @@ class PostService(
             this.anonymous = anonymous
         }
     }
+
+    @Transactional
+    fun delete(
+        postId: Long
+    ) = postRepository.deleteById(postId)
 
 }

@@ -3,6 +3,7 @@ package community.mingle.mingledemo.dto.post
 import java.time.LocalDateTime
 
 data class PostPreviewDto(
+    val postId: Long,
     val title: String,
     val content: String,
     val nicknameOrAnonymous: String,
