@@ -1,8 +1,8 @@
-package community.mingle.mingledemo.domain.member.util
+package community.mingle.mingledemo.dto.member.util
 
 import community.mingle.mingledemo.domain.member.entity.University
-import community.mingle.mingledemo.domain.member.util.CountryDtoUtil.toDto
 import community.mingle.mingledemo.dto.member.UniversityDto
+import community.mingle.mingledemo.dto.member.util.CountryDtoUtil.toDto
 
 object UniversityDtoUtil {
 

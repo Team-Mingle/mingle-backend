@@ -1,4 +1,4 @@
-package community.mingle.mingledemo.domain.member.util
+package community.mingle.mingledemo.dto.member.util
 
 import community.mingle.mingledemo.domain.member.entity.Country
 import community.mingle.mingledemo.dto.member.CountryDto

@@ -2,8 +2,8 @@ package community.mingle.mingledemo.domain.member.service
 
 import community.mingle.mingledemo.domain.member.repository.UniversityRepository
 import community.mingle.mingledemo.domain.member.repository.UniversityRepository.Companion.find
-import community.mingle.mingledemo.domain.member.util.UniversityDtoUtil.toDtos
 import community.mingle.mingledemo.dto.member.UniversityDto
+import community.mingle.mingledemo.dto.member.util.UniversityDtoUtil.toDtos
 import org.springframework.stereotype.Service
 
 @Service

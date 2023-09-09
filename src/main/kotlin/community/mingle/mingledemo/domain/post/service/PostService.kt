@@ -31,8 +31,6 @@ class PostService(
     ): Post {
         val member = memberRepository.find(memberId)
 
-
-
         return Post(
             member = member,
             title = title,

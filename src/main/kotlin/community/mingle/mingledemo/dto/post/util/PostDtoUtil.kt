@@ -1,7 +1,7 @@
-package community.mingle.mingledemo.domain.post
+package community.mingle.mingledemo.dto.post.util
 
-import community.mingle.mingledemo.domain.member.util.MemberDtoUtil.toDto
 import community.mingle.mingledemo.domain.post.entity.Post
+import community.mingle.mingledemo.dto.member.util.MemberDtoUtil.toDto
 import community.mingle.mingledemo.dto.post.PostDto
 
 object PostDtoUtil {
