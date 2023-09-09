@@ -88,7 +88,6 @@ class PostFacade(
         memberId: Long,
         postId: Long
     ): PostDetailDto {
-        val post = postService.getById(postId)
         if (!hasAccessRight(
                 memberId = memberId,
                 postId = postId
@@ -114,8 +113,11 @@ class PostFacade(
             postId = postId,
             memberId = memberId,
         )
-        val isAdmin = isAdmin(post)
+        val isAdmin = isAdmin(postId)
 
+        val post = postService.getById(postId)
+        postService.updateViewCount(postId)
+        
         return PostDetailDto(
             postDto = post.toDto(),
             nicknameOrAnonymous = nicknameOrAnonymous,
@@ -221,8 +223,11 @@ class PostFacade(
     }
 
     private fun isAdmin(
-        post: Post
-    ) = post.member.role == MemberRole.ADMIN
+        postId: Long
+    ): Boolean {
+        val post = postService.getById(postId)
+        return post.member.role == MemberRole.ADMIN
+    }
 
     private fun isReport(
         memberId: Long,
