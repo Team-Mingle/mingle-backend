@@ -11,4 +11,8 @@ data class GetCommentResponse(
     val coComment: List<GetCoCommentResponse>,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
+    val isMyComment: Boolean,
+    val isLiked: Boolean,
+    val isReport: Boolean,
+    val isAdmin: Boolean,
 )

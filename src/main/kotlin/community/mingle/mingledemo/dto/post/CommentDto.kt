@@ -15,5 +15,4 @@ data class CommentDto(
     val status: ContentStatusType,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime,
-    val nicknameOrAnonymous: String,
 )

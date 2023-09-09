@@ -5,7 +5,7 @@ import community.mingle.mingledemo.domain.post.controller.response.CreateComment
 import community.mingle.mingledemo.domain.post.controller.response.GetCoCommentResponse
 import community.mingle.mingledemo.domain.post.controller.response.GetCommentResponse
 import community.mingle.mingledemo.domain.post.facade.CommentFacade
-import community.mingle.mingledemo.dto.post.CommentDto
+import community.mingle.mingledemo.dto.post.CommentDetailDto
 import community.mingle.mingledemo.security.component.TokenParser
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
@@ -59,27 +59,35 @@ class CommentController(
 
     }
 
-    private fun mapToGetCommentResponse(commentDtoListPair: Pair<CommentDto, List<CommentDto>>): GetCommentResponse {
-        val (comment, coComments) = commentDtoListPair
+    private fun mapToGetCommentResponse(commentDtoListPair: Pair<CommentDetailDto, List<CommentDetailDto>>): GetCommentResponse {
+        val (commentDetailDto, commentDetailDtos) = commentDtoListPair
         return GetCommentResponse(
-            id = comment.id,
-            content = comment.content,
-            nicknameOrAnonymous = comment.nicknameOrAnonymous,
-            status = comment.status,
-            coComment = coComments.map(::mapToGetCoCommentResponse),
-            createdAt = comment.createdAt,
-            updatedAt = comment.updatedAt
+            id = commentDetailDto.commentDto.id,
+            content = commentDetailDto.coveredContentByStatus,
+            nicknameOrAnonymous = commentDetailDto.nicknameOrAnonymous,
+            status = commentDetailDto.commentDto.status,
+            coComment = commentDetailDtos.map(::mapToGetCoCommentResponse),
+            createdAt = commentDetailDto.commentDto.createdAt,
+            updatedAt = commentDetailDto.commentDto.updatedAt,
+            isMyComment = commentDetailDto.isMyComment,
+            isLiked = commentDetailDto.isLiked,
+            isReport = commentDetailDto.isReport,
+            isAdmin = commentDetailDto.isAdmin
         )
     }
 
-    private fun mapToGetCoCommentResponse(coComment: CommentDto): GetCoCommentResponse {
+    private fun mapToGetCoCommentResponse(coCommentDetailDto: CommentDetailDto): GetCoCommentResponse {
         return GetCoCommentResponse(
-            id = coComment.id,
-            content = coComment.content,
-            nicknameOrAnonymous = coComment.nicknameOrAnonymous,
-            status = coComment.status,
-            createdAt = coComment.createdAt,
-            updatedAt = coComment.updatedAt
+            id = coCommentDetailDto.commentDto.id,
+            content = coCommentDetailDto.coveredContentByStatus,
+            nicknameOrAnonymous = coCommentDetailDto.nicknameOrAnonymous,
+            status = coCommentDetailDto.commentDto.status,
+            createdAt = coCommentDetailDto.commentDto.createdAt,
+            updatedAt = coCommentDetailDto.commentDto.updatedAt,
+            isMyComment = coCommentDetailDto.isMyComment,
+            isLiked = coCommentDetailDto.isLiked,
+            isReport = coCommentDetailDto.isReport,
+            isAdmin = coCommentDetailDto.isAdmin,
         )
     }
 

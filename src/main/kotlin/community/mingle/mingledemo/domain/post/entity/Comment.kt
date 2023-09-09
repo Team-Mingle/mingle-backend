@@ -1,9 +1,11 @@
 package community.mingle.mingledemo.domain.post.entity
 
 import community.mingle.mingledemo.domain.member.entity.Member
+import community.mingle.mingledemo.domain.report.entity.CommentReport
 import community.mingle.mingledemo.entitybase.AuditLoggingBase
 import community.mingle.mingledemo.enums.ContentStatusType
 import jakarta.persistence.*
+import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.SQLDelete
 import java.time.LocalDateTime
 
@@ -42,4 +44,12 @@ class Comment(
 
     @Column(name = "deleted_at")
     var deletedAt: LocalDateTime? = null
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
+    @BatchSize(size = 10)
+    var likes = mutableListOf<CommentLike>()
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "comment")
+    @BatchSize(size = 10)
+    var reports = mutableListOf<CommentReport>()
 }

@@ -2,9 +2,11 @@ package community.mingle.mingledemo.domain.post.facade
 
 import community.mingle.mingledemo.domain.post.entity.Comment
 import community.mingle.mingledemo.domain.post.service.CommentService
+import community.mingle.mingledemo.dto.post.CommentDetailDto
 import community.mingle.mingledemo.dto.post.CommentDto
+import community.mingle.mingledemo.dto.post.util.CommentDtoUtil.toDetailDto
+import community.mingle.mingledemo.dto.post.util.CommentDtoUtil.toDetailDtos
 import community.mingle.mingledemo.dto.post.util.CommentDtoUtil.toDto
-import community.mingle.mingledemo.dto.post.util.CommentDtoUtil.toDtos
 import community.mingle.mingledemo.enums.ContentStatusType
 import community.mingle.mingledemo.exception.InvalidPostAccess
 import org.springframework.stereotype.Service
@@ -45,7 +47,7 @@ class CommentFacade(
     fun pairCommentsToCoCommentsByPostId(
         postId: Long,
         memberId: Long,
-    ): List<Pair<CommentDto, List<CommentDto>>> {
+    ): List<Pair<CommentDetailDto, List<CommentDetailDto>>> {
         if (!postFacade.hasAccessRight(
                 memberId = memberId, postId = postId
             )
@@ -55,7 +57,7 @@ class CommentFacade(
         val filteredMapCommentToCoComment = filterComments(mapCommentToCoComment)
 
         return filteredMapCommentToCoComment.map { (parentComment, coComments) ->
-            Pair(parentComment.toDto(), coComments.toDtos())
+            Pair(parentComment.toDetailDto(), coComments.toDetailDtos())
         }
 
     }
@@ -72,4 +74,6 @@ class CommentFacade(
             }
         }
     }
+
+
 }
