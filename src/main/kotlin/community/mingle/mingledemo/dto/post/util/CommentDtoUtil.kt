@@ -79,7 +79,7 @@ object CommentDtoUtil {
                 content
         }
 
-    private fun isMyComment(
+    fun isMyComment(
         member: Member,
         comment: Comment
     ) = comment.member == member

@@ -1,4 +1,4 @@
-import community.mingle.mingledemo.exception.AwsException
+import community.mingle.mingledemo.exception.base.AwsException
 import software.amazon.awssdk.awscore.AwsResponse
 
 internal fun <T : AwsResponse> T.throwIfError(): T {

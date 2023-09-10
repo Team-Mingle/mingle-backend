@@ -1,4 +1,4 @@
-package community.mingle.mingledemo.exception
+package community.mingle.mingledemo.exception.member
 
 import community.mingle.mingledemo.exception.base.ResponseStatusReasonException
 import org.springframework.http.HttpStatus

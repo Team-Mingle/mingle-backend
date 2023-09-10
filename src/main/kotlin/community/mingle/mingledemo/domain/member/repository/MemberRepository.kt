@@ -1,7 +1,7 @@
 package community.mingle.mingledemo.domain.member.repository
 
 import community.mingle.mingledemo.domain.member.entity.Member
-import community.mingle.mingledemo.exception.MemberNotFoundException
+import community.mingle.mingledemo.exception.member.MemberNotFoundException
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.repository.findByIdOrNull
 

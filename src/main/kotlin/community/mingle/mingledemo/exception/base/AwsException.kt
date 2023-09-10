@@ -1,4 +1,4 @@
-package community.mingle.mingledemo.exception
+package community.mingle.mingledemo.exception.base
 
 import software.amazon.awssdk.awscore.AwsResponse
 

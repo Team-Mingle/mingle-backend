@@ -115,7 +115,7 @@ object PostDtoUtil {
                 content
         }
 
-    private fun isMyPost(
+    fun isMyPost(
         member: Member,
         post: Post
     ): Boolean = post.member == member

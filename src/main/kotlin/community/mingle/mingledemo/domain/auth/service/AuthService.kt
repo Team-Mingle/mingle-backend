@@ -8,9 +8,9 @@ import community.mingle.mingledemo.dto.auth.LoginDto
 import community.mingle.mingledemo.dto.auth.TokenDto
 import community.mingle.mingledemo.enums.MemberRole
 import community.mingle.mingledemo.enums.MemberStatus
-import community.mingle.mingledemo.exception.InvalidPasswordException
-import community.mingle.mingledemo.exception.MemberNotFoundException
-import community.mingle.mingledemo.exception.ReportedMemberLoginException
+import community.mingle.mingledemo.exception.auth.InvalidPasswordException
+import community.mingle.mingledemo.exception.auth.ReportedMemberLoginException
+import community.mingle.mingledemo.exception.member.MemberNotFoundException
 import community.mingle.mingledemo.security.component.JwtHandler
 import community.mingle.mingledemo.security.component.JwtVerifier
 import org.springframework.stereotype.Service

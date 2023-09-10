@@ -44,7 +44,10 @@ class CommentController(
         )
     }
 
-    @PostMapping("/{postId}")
+    @Operation(
+        summary = "댓글 리스트 조회"
+    )
+    @GetMapping("/{postId}")
     fun getComments(
         @PathVariable
         postId: Long
@@ -95,6 +98,21 @@ class CommentController(
                 likeCount = likeCount
             )
         }
+    }
+
+    @Operation(
+        summary = "댓글 삭제"
+    )
+    @DeleteMapping("/{commentId}")
+    fun deleteComment(
+        @PathVariable
+        commentId: Long
+    ) {
+        val memberId = tokenParser.getMemberId()
+        commentFacade.deleteById(
+            commentId = commentId,
+            memberId = memberId
+        )
     }
 
 
