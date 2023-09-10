@@ -77,18 +77,20 @@ class CommentController(
     }
 
     private fun mapToGetCoCommentResponse(coCommentDetailDto: CommentDetailDto): GetCoCommentResponse {
-        return GetCoCommentResponse(
-            id = coCommentDetailDto.commentDto.id,
-            content = coCommentDetailDto.coveredContentByStatus,
-            nicknameOrAnonymous = coCommentDetailDto.nicknameOrAnonymous,
-            status = coCommentDetailDto.commentDto.status,
-            createdAt = coCommentDetailDto.commentDto.createdAt,
-            updatedAt = coCommentDetailDto.commentDto.updatedAt,
-            isMyComment = coCommentDetailDto.isMyComment,
-            isLiked = coCommentDetailDto.isLiked,
-            isReport = coCommentDetailDto.isReport,
-            isAdmin = coCommentDetailDto.isAdmin,
-        )
+        return with(coCommentDetailDto) {
+            GetCoCommentResponse(
+                id = commentDto.id,
+                content = coveredContentByStatus,
+                nicknameOrAnonymous = nicknameOrAnonymous,
+                status = commentDto.status,
+                createdAt = commentDto.createdAt,
+                updatedAt = commentDto.updatedAt,
+                isMyComment = isMyComment,
+                isLiked = isLiked,
+                isReport = isReport,
+                isAdmin = isAdmin,
+            )
+        }
     }
 
 
