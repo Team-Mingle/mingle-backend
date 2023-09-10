@@ -44,7 +44,10 @@ class CommentController(
         )
     }
 
-    @PostMapping("/{postId}")
+    @Operation(
+        summary = "댓글 리스트 조회"
+    )
+    @GetMapping("/{postId}")
     fun getComments(
         @PathVariable
         postId: Long
