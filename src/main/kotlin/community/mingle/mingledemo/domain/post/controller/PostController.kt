@@ -111,7 +111,7 @@ class PostController(
         return with(postDetailDto) {
             GetPostDetailResponse(
                 id = postId,
-                nickname = postDto.nicknameOrAnonymous,
+                nickname = nicknameOrAnonymous,
                 title = postDto.title,
                 content = postDto.content,
                 viewCount = postDto.viewCount,
