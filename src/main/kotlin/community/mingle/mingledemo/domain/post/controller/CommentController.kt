@@ -2,14 +2,14 @@ package community.mingle.mingledemo.domain.post.controller
 
 import community.mingle.mingledemo.domain.post.controller.request.CreateCommentRequest
 import community.mingle.mingledemo.domain.post.controller.response.CreateCommentResponse
+import community.mingle.mingledemo.domain.post.controller.response.GetCoCommentResponse
+import community.mingle.mingledemo.domain.post.controller.response.GetCommentResponse
 import community.mingle.mingledemo.domain.post.facade.CommentFacade
+import community.mingle.mingledemo.dto.post.CommentDetailDto
 import community.mingle.mingledemo.security.component.TokenParser
 import io.swagger.v3.oas.annotations.Operation
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/comment")
@@ -42,6 +42,60 @@ class CommentController(
         return CreateCommentResponse(
             commentId = commentDto.id
         )
+    }
+
+    @PostMapping("/{postId}")
+    fun getComments(
+        @PathVariable
+        postId: Long
+    ): List<GetCommentResponse> {
+        val memberId = tokenParser.getMemberId()
+        val pairCommentsToCoCommentsByPostId = commentFacade.pairCommentsToCoCommentsByPostId(
+            postId = postId,
+            memberId = memberId
+        )
+
+        return pairCommentsToCoCommentsByPostId.map(::mapToGetCommentResponse)
 
     }
+
+    private fun mapToGetCommentResponse(commentDtoListPair: Pair<CommentDetailDto, List<CommentDetailDto>>): GetCommentResponse {
+        val (commentDetailDto, coCommentDetailDtos) = commentDtoListPair
+        return with(commentDetailDto) {
+            GetCommentResponse(
+                id = commentDto.id,
+                content = coveredContentByStatus,
+                nicknameOrAnonymous = nicknameOrAnonymous,
+                status = commentDto.status,
+                coComment = coCommentDetailDtos.map(::mapToGetCoCommentResponse),
+                createdAt = commentDto.createdAt,
+                updatedAt = commentDto.updatedAt,
+                isMyComment = isMyComment,
+                isLiked = isLiked,
+                isReport = isReport,
+                isAdmin = isAdmin,
+                likeCount = likeCount
+            )
+        }
+    }
+
+    private fun mapToGetCoCommentResponse(coCommentDetailDto: CommentDetailDto): GetCoCommentResponse {
+        return with(coCommentDetailDto) {
+            GetCoCommentResponse(
+                id = commentDto.id,
+                content = coveredContentByStatus,
+                nicknameOrAnonymous = nicknameOrAnonymous,
+                status = commentDto.status,
+                createdAt = commentDto.createdAt,
+                updatedAt = commentDto.updatedAt,
+                isMyComment = isMyComment,
+                isLiked = isLiked,
+                isReport = isReport,
+                isAdmin = isAdmin,
+                likeCount = likeCount
+            )
+        }
+    }
+
+
 }
