@@ -23,6 +23,8 @@ object CommentDtoUtil {
         createdAt = createdAt,
         updatedAt = updatedAt,
         status = status,
+        likes = likes,
+        reports = reports
     )
 
     fun List<Comment>.toDtos() = this.map {
@@ -43,15 +45,16 @@ object CommentDtoUtil {
             member = member,
             comment = this,
         ),
-        isAdmin(this),
+        isAdmin = isAdmin(this),
         nicknameOrAnonymous = nicknameOrAnonymous(
             nickname = member.nickname,
             anonymous = anonymous,
         ),
-        coverContentByStatus(
+        coveredContentByStatus = coverContentByStatus(
             content = content,
             status = status
-        )
+        ),
+        likeCount = likes.size
     )
 
     fun List<Comment>.toDetailDtos() = this.map {

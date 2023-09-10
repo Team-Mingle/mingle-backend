@@ -14,4 +14,5 @@ data class GetCoCommentResponse(
     val isLiked: Boolean,
     val isReport: Boolean,
     val isAdmin: Boolean,
+    val likeCount: Int
 )

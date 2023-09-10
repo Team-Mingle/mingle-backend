@@ -60,20 +60,23 @@ class CommentController(
     }
 
     private fun mapToGetCommentResponse(commentDtoListPair: Pair<CommentDetailDto, List<CommentDetailDto>>): GetCommentResponse {
-        val (commentDetailDto, commentDetailDtos) = commentDtoListPair
-        return GetCommentResponse(
-            id = commentDetailDto.commentDto.id,
-            content = commentDetailDto.coveredContentByStatus,
-            nicknameOrAnonymous = commentDetailDto.nicknameOrAnonymous,
-            status = commentDetailDto.commentDto.status,
-            coComment = commentDetailDtos.map(::mapToGetCoCommentResponse),
-            createdAt = commentDetailDto.commentDto.createdAt,
-            updatedAt = commentDetailDto.commentDto.updatedAt,
-            isMyComment = commentDetailDto.isMyComment,
-            isLiked = commentDetailDto.isLiked,
-            isReport = commentDetailDto.isReport,
-            isAdmin = commentDetailDto.isAdmin
-        )
+        val (commentDetailDto, coCommentDetailDtos) = commentDtoListPair
+        return with(commentDetailDto) {
+            GetCommentResponse(
+                id = commentDto.id,
+                content = coveredContentByStatus,
+                nicknameOrAnonymous = nicknameOrAnonymous,
+                status = commentDto.status,
+                coComment = coCommentDetailDtos.map(::mapToGetCoCommentResponse),
+                createdAt = commentDto.createdAt,
+                updatedAt = commentDto.updatedAt,
+                isMyComment = isMyComment,
+                isLiked = isLiked,
+                isReport = isReport,
+                isAdmin = isAdmin,
+                likeCount = likeCount
+            )
+        }
     }
 
     private fun mapToGetCoCommentResponse(coCommentDetailDto: CommentDetailDto): GetCoCommentResponse {
@@ -89,6 +92,7 @@ class CommentController(
                 isLiked = isLiked,
                 isReport = isReport,
                 isAdmin = isAdmin,
+                likeCount = likeCount
             )
         }
     }

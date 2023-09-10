@@ -8,4 +8,5 @@ data class CommentDetailDto(
     val isAdmin: Boolean,
     val nicknameOrAnonymous: String,
     val coveredContentByStatus: String,
+    val likeCount: Int,
 )
