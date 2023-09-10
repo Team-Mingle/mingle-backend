@@ -6,6 +6,7 @@ import community.mingle.mingledemo.domain.post.service.PostService
 import community.mingle.mingledemo.dto.post.PostDetailDto
 import community.mingle.mingledemo.dto.post.PostDto
 import community.mingle.mingledemo.dto.post.PostPreviewDto
+import community.mingle.mingledemo.dto.post.util.PostDtoUtil.isMyPost
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDetailDto
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDto
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toPreviewDtos
@@ -119,8 +120,17 @@ class PostFacade(
 
     @Transactional
     fun delete(
-        postId: Long
+        postId: Long,
+        memberId: Long,
     ) {
+        val post = postService.getById(postId)
+        val member = memberService.getById(memberId)
+        if (!isMyPost(
+                post = post,
+                member = member
+            )
+        ) throw InvalidPostAccessException()
+
         postService.delete(postId)
         postImageService.delete(postId)
     }

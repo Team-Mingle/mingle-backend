@@ -176,6 +176,12 @@ class PostController(
     fun deletePost(
         @PathVariable
         postId: Long
-    ) = postFacade.delete(postId)
+    ) {
+        val memberId = tokenParser.getMemberId()
+        postFacade.delete(
+            postId = postId,
+            memberId = memberId
+        )
+    }
 
 }
