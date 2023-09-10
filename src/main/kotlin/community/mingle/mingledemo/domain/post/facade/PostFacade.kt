@@ -11,7 +11,7 @@ import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDto
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toPreviewDtos
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
-import community.mingle.mingledemo.exception.post.InvalidPostAccess
+import community.mingle.mingledemo.exception.post.InvalidPostAccessException
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -80,7 +80,7 @@ class PostFacade(
                 memberId = memberId,
                 postId = postId
             )
-        ) throw InvalidPostAccess()
+        ) throw InvalidPostAccessException()
 
         val post = postService.getById(postId)
         postService.updateViewCount(postId)
@@ -102,7 +102,7 @@ class PostFacade(
                 memberId = memberId,
                 postId = postId
             )
-        ) throw InvalidPostAccess()
+        ) throw InvalidPostAccessException()
         val post = postService.update(
             postId = postId,
             title = title,

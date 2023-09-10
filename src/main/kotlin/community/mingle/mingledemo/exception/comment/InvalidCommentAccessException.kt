@@ -1,10 +1,10 @@
-package community.mingle.mingledemo.exception.post
+package community.mingle.mingledemo.exception.comment
 
 import community.mingle.mingledemo.exception.base.ResponseStatusReasonException
 import org.springframework.http.HttpStatus
 
-class InvalidPostAccess : ResponseStatusReasonException(
+class InvalidCommentAccessException : ResponseStatusReasonException(
     statusCode = HttpStatus.UNAUTHORIZED,
-    code = 2001,
+    code = 3002,
     reasonMessage = "접근 권한이 없는 게시글 입니다.",
 )

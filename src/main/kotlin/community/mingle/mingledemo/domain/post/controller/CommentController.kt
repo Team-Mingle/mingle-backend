@@ -100,5 +100,20 @@ class CommentController(
         }
     }
 
+    @Operation(
+        summary = "댓글 삭제"
+    )
+    @DeleteMapping("/{commentId}")
+    fun deleteComment(
+        @PathVariable
+        commentId: Long
+    ) {
+        val memberId = tokenParser.getMemberId()
+        commentFacade.deleteById(
+            commentId = commentId,
+            memberId = memberId
+        )
+    }
+
 
 }

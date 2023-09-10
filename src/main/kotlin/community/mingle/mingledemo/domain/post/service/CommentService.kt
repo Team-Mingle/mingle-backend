@@ -4,6 +4,7 @@ import community.mingle.mingledemo.domain.member.repository.MemberRepository
 import community.mingle.mingledemo.domain.member.repository.MemberRepository.Companion.find
 import community.mingle.mingledemo.domain.post.entity.Comment
 import community.mingle.mingledemo.domain.post.repository.CommentRepository
+import community.mingle.mingledemo.domain.post.repository.CommentRepository.Companion.find
 import community.mingle.mingledemo.domain.post.repository.PostRepository
 import community.mingle.mingledemo.domain.post.repository.PostRepository.Companion.find
 import org.springframework.stereotype.Service
@@ -46,6 +47,14 @@ class CommentService(
         return mapCommentToCoComment(comments)
 
     }
+
+    fun getById(
+        commentId: Long
+    ) = commentRepository.find(commentId)
+
+    fun deleteById(
+        commentId: Long
+    ) = commentRepository.deleteById(commentId)
 
     private fun mapCommentToCoComment(
         allComments: List<Comment>
