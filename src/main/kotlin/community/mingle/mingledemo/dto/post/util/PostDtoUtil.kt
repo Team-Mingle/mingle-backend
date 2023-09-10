@@ -34,10 +34,6 @@ object PostDtoUtil {
         createdAt = createdAt,
         updatedAt = updatedAt,
         deletedAt = deletedAt,
-        nicknameOrAnonymous = nicknameOrAnonymous(
-            nickname = member.nickname,
-            anonymous = anonymous
-        )
     )
 
     fun List<Post>.toDtos(): List<PostDto> =
@@ -47,6 +43,10 @@ object PostDtoUtil {
 
     fun Post.toDetailDto() = PostDetailDto(
         postDto = this.toDto(),
+        nicknameOrAnonymous = nicknameOrAnonymous(
+            nickname = member.nickname,
+            anonymous = anonymous
+        ),
         isMyPost = isMyPost(
             member = member,
             post = this
