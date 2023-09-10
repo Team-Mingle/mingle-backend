@@ -2,7 +2,7 @@ package community.mingle.mingledemo.domain.post.repository
 
 import community.mingle.mingledemo.domain.post.entity.Post
 import community.mingle.mingledemo.enums.CategoryType
-import community.mingle.mingledemo.exception.PostNotFoundException
+import community.mingle.mingledemo.exception.post.PostNotFoundException
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Slice
 import org.springframework.data.jpa.repository.JpaRepository

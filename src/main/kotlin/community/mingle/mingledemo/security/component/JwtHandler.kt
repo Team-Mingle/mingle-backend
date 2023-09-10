@@ -9,8 +9,8 @@ import community.mingle.mingledemo.domain.auth.entity.RefreshToken
 import community.mingle.mingledemo.domain.auth.repository.RefreshTokenRedisRepository
 import community.mingle.mingledemo.domain.auth.repository.RefreshTokenRedisRepository.Companion.find
 import community.mingle.mingledemo.enums.MemberRole
-import community.mingle.mingledemo.exception.AuthenticateFailedException
-import community.mingle.mingledemo.exception.JwtTokenExpiredException
+import community.mingle.mingledemo.exception.auth.AuthenticateFailedException
+import community.mingle.mingledemo.exception.auth.JwtTokenExpiredException
 import org.springframework.stereotype.Component
 import java.time.LocalDateTime
 import java.time.ZoneId

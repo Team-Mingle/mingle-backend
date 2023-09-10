@@ -11,7 +11,7 @@ import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toDto
 import community.mingle.mingledemo.dto.post.util.PostDtoUtil.toPreviewDtos
 import community.mingle.mingledemo.enums.BoardType
 import community.mingle.mingledemo.enums.CategoryType
-import community.mingle.mingledemo.exception.InvalidPostAccess
+import community.mingle.mingledemo.exception.post.InvalidPostAccess
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

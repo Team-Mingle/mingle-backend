@@ -7,8 +7,8 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import community.mingle.mingledemo.dto.TokenContentDto
 import community.mingle.mingledemo.enums.MemberRole
-import community.mingle.mingledemo.exception.AuthenticateFailedException
-import community.mingle.mingledemo.exception.JwtTokenExpiredException
+import community.mingle.mingledemo.exception.auth.AuthenticateFailedException
+import community.mingle.mingledemo.exception.auth.JwtTokenExpiredException
 import community.mingle.mingledemo.infra.aws.service.SecretsManagerService
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.stereotype.Component
