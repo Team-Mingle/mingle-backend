@@ -146,10 +146,4 @@ class PostFacade(
             member.university.country == post.member.university.country
         } else member.university == post.member.university
     }
-
-
-    companion object {
-        private const val ANONYMOUS_NICKNAME = "익명"
-    }
-
 }

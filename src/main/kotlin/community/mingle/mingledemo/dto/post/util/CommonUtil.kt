@@ -7,8 +7,10 @@ object CommonUtil {
         anonymous: Boolean,
     ): String {
         return if (anonymous) {
-            "익명"
+            ANONYMOUS_NICKNAME
         } else nickname
     }
+
+    private const val ANONYMOUS_NICKNAME = "익명"
 
 }
