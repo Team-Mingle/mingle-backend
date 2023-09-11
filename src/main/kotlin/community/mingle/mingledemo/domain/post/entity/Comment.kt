@@ -3,6 +3,7 @@ package community.mingle.mingledemo.domain.post.entity
 import community.mingle.mingledemo.domain.member.entity.Member
 import community.mingle.mingledemo.domain.report.entity.CommentReport
 import community.mingle.mingledemo.entitybase.AuditLoggingBase
+import community.mingle.mingledemo.entitybase.CommentEntityListener
 import community.mingle.mingledemo.enums.ContentStatusType
 import jakarta.persistence.*
 import org.hibernate.annotations.BatchSize
@@ -10,6 +11,7 @@ import org.hibernate.annotations.SQLDelete
 import java.time.LocalDateTime
 
 @Entity
+@EntityListeners(CommentEntityListener::class)
 @SQLDelete(sql = "UPDATE comment SET deleted_at = CURRENT_TIMESTAMP WHERE id = ?")
 @Table(name = "comment")
 class Comment(

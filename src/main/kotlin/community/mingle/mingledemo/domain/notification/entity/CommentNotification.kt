@@ -12,7 +12,6 @@ import jakarta.persistence.*
 class CommentNotification(
 
     member: Member,
-    read: Boolean,
     board: BoardType,
     category: CategoryType,
     type: NotificationType,
@@ -23,7 +22,6 @@ class CommentNotification(
 
     ) : Notification(
     member = member,
-    read = read,
     board = board,
     category = category,
     type = type
