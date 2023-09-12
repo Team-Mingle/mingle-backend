@@ -3,8 +3,8 @@ mingle-server-demo
 
 ## About This Repo
 
-❗️[기존 밍글 레거시 서버](https://github.com/Team-Mingle/mingle-server)를 리펙토링하며 새로운 컨벤션과 기술 스택을 적용 및 테스트하는 레포입니다.
-❗️This Repo is to refactor existing [Mingle legacy server](https://github.com/Team-Mingle/mingle-server) and to apply and test new conventions and technology stacks.
+- ❗️[기존 밍글 레거시 서버](https://github.com/Team-Mingle/mingle-server)를 리펙토링하며 새로운 컨벤션과 기술 스택을 적용 및 테스트하는 레포입니다.
+- ❗️This Repo is to refactor existing [Mingle legacy server](https://github.com/Team-Mingle/mingle-server) and to apply and test new conventions and technology stacks.
 
 ## Develop Environment
 
