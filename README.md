@@ -1,5 +1,4 @@
-# mingle-demo
-mingle-server-demo
+# mingle-api
 
 ## About This Repo
 
